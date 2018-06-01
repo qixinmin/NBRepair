@@ -195,17 +195,54 @@ namespace NBRepair
                             string descri = querySdr["ITEM_DESCRIPTION"].ToString();
                             tableName = "ChuKu";
                             cmd1.CommandText = "INSERT INTO " + tableName + " (countfile,partsno, serial,qty,price ,keyinman,chukudate)  VALUES('" +
-                             NBID + "','" +
-                             lcfcpn + "','" +
-                              descri + "','" +
-                             partsqty + "','" +
-                             0 + "','" +
-                              NBID + "','" +
-                              System.DateTime.Today.ToShortDateString() +
+                                NBID + "','" +
+                                lcfcpn + "','" +
+                                descri + "','" +
+                                partsqty + "','" +
+                                0 + "','" +
+                                NBID + "','" +
+                                System.DateTime.Today.ToShortDateString() +
                               "')";
-                            // querySdr.Close();
                             cmd1.ExecuteNonQuery();
 
+                            //更新料号数量
+                            string partsno = lcfcpn;
+                            cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
+                            querySdr = cmd.ExecuteReader();
+                            string left_number = "";
+                            while (querySdr.Read())
+                            {
+                                left_number = querySdr[1].ToString();
+                                break;
+                            }
+                            querySdr.Close();
+
+                            if (left_number == null || left_number == "")
+                            {
+                                conn.Close();
+                                MessageBox.Show("此料号没有库存！");
+                                return;
+                            }
+
+                            try
+                            {
+                                int totalLeft = Int32.Parse(left_number);
+                                int thistotal = totalLeft - Int32.Parse(partsqty);
+
+                                if (thistotal < 0)
+                                {
+                                    conn.Close();
+                                    MessageBox.Show("数量不够，不能出库！");
+                                    return;
+                                }
+
+                                cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString());
+                            }
                         }
 
                        // MessageBox.Show(material);

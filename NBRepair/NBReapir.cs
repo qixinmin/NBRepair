@@ -79,9 +79,7 @@ namespace NBRepair
                     {
                         tableName = "ChuKu";
                         cmd.CommandText = "delete   from " + tableName + " where  countfile = '" + nbid  + "' ";
-                       // querySdr = cmd.ExecuteReader();
                         cmd.ExecuteNonQuery();
-                        //SqlDataReader querySdr = cmd.ExecuteReader();
                         string[] str = { this.COVERSN.Text.ToUpper(), this.BRZELSN.Text.ToUpper(), this.UPSN.Text.ToUpper(), this.LOWSN.Text.ToUpper(), this.OTHERSN.Text.ToUpper() };
                         for (int i = 0; i < str.Length; i = i + 1)
                         {
@@ -90,17 +88,54 @@ namespace NBRepair
                                 if (str[i].Length > 11)
                                 {
                                     cmd.CommandText = "INSERT INTO " + tableName + " (countfile,partsno,serial,qty,price,keyinman,chukudate)  VALUES('" +
-                                    nbid + "','" +
-                                    str[i].Substring(0, 11) + "','" +
-                                     str[i] + "','" +
-                                    1 + "','" +
-                                    0.00 + "','" +
-                                    this.RepairMan.Text + "','" +
-                                     System.DateTime.Today.ToShortDateString() +
+                                        nbid + "','" +
+                                        str[i].Substring(0, 11) + "','" +
+                                        str[i] + "','" +
+                                        1 + "','" +
+                                        0.00 + "','" +
+                                        this.RepairMan.Text + "','" +
+                                        System.DateTime.Today.ToShortDateString() +
                                      "')";
-                                    //querySdr.Close();
                                     cmd.ExecuteNonQuery();
-                                    // querySdr.Close();
+
+                                    //更新料号数量
+                                    string partsno = str[i].Substring(0, 11);
+                                    cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
+                                    querySdr = cmd.ExecuteReader();
+                                    string left_number = "";
+                                    while (querySdr.Read())
+                                    {
+                                        left_number = querySdr[1].ToString();
+                                        break;
+                                    }
+                                    querySdr.Close();
+
+                                    if (left_number == null || left_number == "")
+                                    {
+                                        conn.Close();
+                                        MessageBox.Show("此料号没有库存！");
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        int totalLeft = Int32.Parse(left_number);
+                                        int thistotal = totalLeft - 1;
+
+                                        if (thistotal < 0)
+                                        {
+                                            conn.Close();
+                                            MessageBox.Show("数量不够，不能出库！");
+                                            return;
+                                        }
+
+                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.ToString());
+                                    }
                                 }
                             }
 
@@ -109,12 +144,11 @@ namespace NBRepair
                         Clear();
                         cmd.Dispose();
                         cmd.Dispose();
-
                     }
                     else
                     {
-                        MessageBox.Show(" 没有这个记录！！！"); this.NBSerial.Focus();
-
+                        MessageBox.Show("没有这个记录！！！");
+                        this.NBSerial.Focus();
                     }
                     MessageBox.Show("  Update Save OK");
                 }
