@@ -138,6 +138,47 @@ namespace NBRepair
                      "')";
                     //querySdr.Close();
                     cmd.ExecuteNonQuery();
+
+
+                    //update 料号数量
+                    cmd.CommandText = "select number from materialhouse where materialNo='" + this.partsno.Text.Trim() + "'";
+                    SqlDataReader querySdr = cmd.ExecuteReader();
+                    string left_number = "";
+                    while (querySdr.Read())
+                    {
+                        left_number = querySdr[1].ToString();
+                        break;
+                    }
+                    querySdr.Close();
+
+                    if (left_number == null || left_number == "")
+                    {
+                        conn.Close();
+                        MessageBox.Show("此料号没有库存！");
+                        return;
+                    }
+
+                    try
+                    {
+                        int totalLeft = Int32.Parse(left_number);
+                        int thistotal = totalLeft - Int32.Parse(this.qty.Text.Trim());
+
+                        if (thistotal < 0)
+                        {
+                            conn.Close();
+                            MessageBox.Show("数量不够，不能出库！");
+                            return;
+                        }
+                        
+                        cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + this.partsno.Text.Trim() + "'";                     
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
                     MessageBox.Show("New Save OK");
                     Clear();
                     cmd.Dispose();

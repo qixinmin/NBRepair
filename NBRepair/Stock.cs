@@ -12,6 +12,8 @@ namespace NBRepair
 {
     public partial class StockIn : Form
     {
+        string tableName = "RuKu";
+
         public StockIn()
         {
             InitializeComponent();
@@ -28,18 +30,56 @@ namespace NBRepair
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
-                    string tableName = "RuKu";
-                    //SqlDataReader querySdr = cmd.ExecuteReader();
+                    
                     cmd.CommandText = "INSERT INTO " + tableName + " (countfile,partsno,qty,price,keyinman,rukudate)  VALUES('" +
                     this.countfile.Text.Trim() + "','" +
                     this.partsno.Text.Trim() + "','" +
                     this.qty.Text.Trim() + "','" +
                     this.price.Text.Trim().ToUpper() + "','" +
                     this.keyinman.Text.Trim().ToUpper() + "','" +
-                     System.DateTime.Today.ToShortDateString() +
+                    System.DateTime.Today.ToShortDateString() +
                      "')";
-                    //querySdr.Close();
                     cmd.ExecuteNonQuery();
+
+                    //update 料号数量
+                    cmd.CommandText = "select number from materialhouse where materialNo='" + this.partsno.Text.Trim() + "'";
+                    SqlDataReader querySdr = cmd.ExecuteReader();
+                    string left_number = "";
+                    bool exist = false;
+                    while (querySdr.Read())
+                    {
+                        exist = true;
+                        left_number = querySdr[1].ToString();
+                        break;
+                    }
+                    querySdr.Close();
+
+                    if (left_number == null || left_number == "")
+                    {
+                        left_number = "0";
+                    }
+
+                    try
+                    {
+                        int totalLeft = Int32.Parse(left_number);
+                        int thistotal = totalLeft + Int32.Parse(this.qty.Text.Trim());
+
+                        if (exist)
+                        {
+                            cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + this.partsno.Text.Trim() + "'";
+                        }
+                        else
+                        {
+                            cmd.CommandText = "INSERT INTO materialhouse (number, materialNo ) VALUES('" + this.qty.Text.Trim() + "','" + this.partsno.Text.Trim() + "')";
+                        }
+                        
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
                     MessageBox.Show("New Save OK");
                     Clear();
                     cmd.Dispose();
@@ -48,11 +88,12 @@ namespace NBRepair
                 queryLastesttoday();
             }
         }
+
         public void Clear()
         {
             this.price.Text = ""; this.partsno.Text = ""; this.partsno.Text = ""; this.qty.Text = "";
-
         }
+
         public void queryLastesttoday()
         {
             try
@@ -60,7 +101,7 @@ namespace NBRepair
                 SqlConnection mConn = new SqlConnection(Conlist.ConStr);
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
-                string tableName = "RuKU";
+               
                 cmd.CommandText = "select * from " + tableName + " where rukuDate = '" + System.DateTime.Today.ToString("yyyy-MM-dd") + "'";
 
                 cmd.CommandType = CommandType.Text;
@@ -78,7 +119,6 @@ namespace NBRepair
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -87,22 +127,20 @@ namespace NBRepair
             {
                 dataGridView1.DataSource = null;
                 dataGridView1.Columns.Clear();
-
-                string tablename = "RuKU";
+              
                 SqlConnection mConn = new SqlConnection(Conlist.ConStr);
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
 
-
-                cmd.CommandText = "select * from " + tablename + " where rukudate = '" + System.DateTime.Today.ToShortDateString() + "'";
+                cmd.CommandText = "select * from " + tableName + " where rukudate = '" + System.DateTime.Today.ToShortDateString() + "'";
 
                 cmd.CommandType = CommandType.Text;
 
                 SqlDataAdapter sda = new SqlDataAdapter();
                 sda.SelectCommand = cmd;
                 DataSet ds = new DataSet();
-                sda.Fill(ds, tablename);
+                sda.Fill(ds, tableName);
                 dataGridView1.DataSource = ds.Tables[0];
                 dataGridView1.RowHeadersVisible = false;
                 //dataGridView1.ColumnHeadersVisible = false;
@@ -139,14 +177,14 @@ namespace NBRepair
                 dataGridView1.DataSource = null;
                 dataGridView1.Columns.Clear();
 
-                string tablename = "RuKu";
+              
                 SqlConnection mConn = new SqlConnection(Conlist.ConStr);
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
 
                 // MessageBox.Show(dateTimePicker1.Value.Date.ToShortDateString());
-                cmd.CommandText = "select * from " + tablename + " where rukudate between '" + dateTimePicker1.Value.Date + "' and '" + dateTimePicker2.Value.Date + "'";
+                cmd.CommandText = "select * from " + tableName + " where rukudate between '" + dateTimePicker1.Value.Date + "' and '" + dateTimePicker2.Value.Date + "'";
                 //  cmd.CommandText = "select NBSerial,NewNBSerial, Model ,ShipDate,Status from " + tablename + " where ShipDate = '" + dateTimePicker1.Value.Date +"'";
 
                 cmd.CommandType = CommandType.Text;
@@ -154,7 +192,7 @@ namespace NBRepair
                 SqlDataAdapter sda = new SqlDataAdapter();
                 sda.SelectCommand = cmd;
                 DataSet ds = new DataSet();
-                sda.Fill(ds, tablename);
+                sda.Fill(ds, tableName);
                 dataGridView1.DataSource = ds.Tables[0];
                 dataGridView1.RowHeadersVisible = false;
                 EXCELIO excel = new EXCELIO();
