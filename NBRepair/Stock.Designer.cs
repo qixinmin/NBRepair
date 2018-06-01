@@ -44,6 +44,8 @@
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.declearNoTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -200,6 +202,24 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(42, 470);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(159, 35);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "申请单号";
+            // 
+            // declearNoTextBox
+            // 
+            this.declearNoTextBox.Font = new System.Drawing.Font("SimSun", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.declearNoTextBox.Location = new System.Drawing.Point(251, 474);
+            this.declearNoTextBox.Name = "declearNoTextBox";
+            this.declearNoTextBox.Size = new System.Drawing.Size(455, 44);
+            this.declearNoTextBox.TabIndex = 2;
+            // 
             // StockIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -215,9 +235,11 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.declearNoTextBox);
             this.Controls.Add(this.price);
             this.Controls.Add(this.qty);
             this.Controls.Add(this.partsno);
@@ -247,5 +269,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox declearNoTextBox;
     }
 }

@@ -30,14 +30,15 @@ namespace NBRepair
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
-                    
-                    cmd.CommandText = "INSERT INTO " + tableName + " (countfile,partsno,qty,price,keyinman,rukudate)  VALUES('" +
+
+                    cmd.CommandText = "INSERT INTO " + tableName + " (countfile,partsno,qty,price,keyinman,rukudate,delearNo) VALUES('" +
                     this.countfile.Text.Trim() + "','" +
                     this.partsno.Text.Trim() + "','" +
                     this.qty.Text.Trim() + "','" +
                     this.price.Text.Trim().ToUpper() + "','" +
                     this.keyinman.Text.Trim().ToUpper() + "','" +
-                    System.DateTime.Today.ToShortDateString() +
+                    System.DateTime.Today.ToShortDateString() + "','" +
+                    this.declearNoTextBox.Text.Trim()+
                      "')";
                     cmd.ExecuteNonQuery();
 

@@ -136,9 +136,56 @@ namespace NBRepair
                                     {
                                         MessageBox.Show(ex.ToString());
                                     }
+
+                                    //对应的材料入不良品库
+                                    //入不良品库记录
+                                    cmd.CommandText = "INSERT INTO materialNgHouseRecord (materialNo,number,input_date)  VALUES('" +
+                                        partsno + "','" +
+                                        1 + "','" +
+                                        System.DateTime.Today.ToShortDateString() +
+                                     "')";
+                                    cmd.ExecuteNonQuery();
+
+                                    //更新不良品库数量
+                                    cmd.CommandText = "select number from materialNgHouse where materialNo='" + partsno + "'";
+                                    querySdr = cmd.ExecuteReader();
+                                    bool exist = false;
+                                    left_number = "";
+                                    while (querySdr.Read())
+                                    {
+                                        left_number = querySdr[1].ToString();
+                                        exist = true;
+                                        break;
+                                    }
+                                    querySdr.Close();
+
+                                    if (left_number == null || left_number == "")
+                                    {
+                                        left_number = "0";
+                                    }
+
+                                    try
+                                    {
+                                        int totalLeft = Int32.Parse(left_number);
+                                        int thistotal = totalLeft + 1;
+                                        
+                                        if (exist)
+                                        {
+                                            cmd.CommandText = "update materialNgHouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                        }
+                                        else
+                                        {
+                                            cmd.CommandText = "INSERT INTO materialNgHouse(number, materialNo) VALUES('" + thistotal + "','" + partsno + "')";
+                                        }
+
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.ToString());
+                                    }
                                 }
                             }
-
                         }
                        // MessageBox.Show("New Save OK");
                         Clear();

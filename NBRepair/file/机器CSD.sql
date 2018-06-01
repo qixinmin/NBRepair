@@ -18,6 +18,43 @@ CREATE TABLE [dbo].[BOMCompare](
 	[STEP_SEQUENCE] [nvarchar](50) NULL
 )
 
+/*不良品材料库房*/
+create table materialNgHouse
+(
+Id INT PRIMARY KEY IDENTITY, 
+materialNo NVARCHAR(128),/*料号*/
+number NVARCHAR(128), /*入库数量*/
+)
+
+/*不良品材料入库记录*/
+create table materialNgHouseRecord
+(
+Id INT PRIMARY KEY IDENTITY, 
+materialNo NVARCHAR(128),/*料号*/
+number NVARCHAR(128), /*入库数量*/
+input_date date,/*入库时间*/
+)
+
+/*材料库房*/
+create table materialhouse
+(
+Id INT PRIMARY KEY IDENTITY, 
+materialNo NVARCHAR(128),/*料号*/
+number NVARCHAR(128), /*入库数量*/
+)
+
+/*原材料入库*/
+CREATE TABLE [dbo].[RuKu](
+	[countfile] [varchar](50) NULL,
+	[partsno] [varchar](50) NULL,
+	[qty] [int] NULL,
+	[price] [float] NULL,
+	[keyinman] [varchar](50) NULL,
+	[rukudate] [date] NULL,
+	[delearNo] [nvarchar](100) NULL, /*申请单号*/
+)
+
+
 CREATE TABLE [dbo].[ChuKu](
 	[countfile] [nvarchar](100) NULL,
 	[partsno] [nvarchar](100) NULL,
@@ -28,17 +65,7 @@ CREATE TABLE [dbo].[ChuKu](
 	[chukudate] [date] NULL
 ) 
 
-CREATE TABLE [dbo].[INNBCHUKU](
-	[vender] [nvarchar](50) NULL,
-	[customer] [nvarchar](50) NULL,
-	[NBID] [nvarchar](50) NULL,
-	[NBSerial] [nvarchar](50) NULL,
-	[Model] [nvarchar](50) NULL,
-	[qty] [int] NULL,
-	[chukudate] [date] NULL
-) 
-
-
+/*待维修整机入库*/
 CREATE TABLE [dbo].[INNBRUKU](
 	[vender] [nvarchar](50) NULL,
 	[customer] [nvarchar](50) NULL,
@@ -49,9 +76,8 @@ CREATE TABLE [dbo].[INNBRUKU](
 	[rukudate] [date] NULL
 ) 
 
-
-
-CREATE TABLE [dbo].[OUTNBCHUKU](
+/*待维修整机出库*/
+CREATE TABLE [dbo].[INNBCHUKU](
 	[vender] [nvarchar](50) NULL,
 	[customer] [nvarchar](50) NULL,
 	[NBID] [nvarchar](50) NULL,
@@ -59,8 +85,17 @@ CREATE TABLE [dbo].[OUTNBCHUKU](
 	[Model] [nvarchar](50) NULL,
 	[qty] [int] NULL,
 	[chukudate] [date] NULL
+) 
+
+/*不良品材料库房*/
+create table NBHouse
+(
+Id INT PRIMARY KEY IDENTITY, 
+model NVARCHAR(128),/*机型*/
+number NVARCHAR(128), /*入库数量*/
 )
 
+/*良品入库*/
 CREATE TABLE [dbo].[OUTNBRUKU](
 	[vender] [nvarchar](50) NULL,
 	[customer] [nvarchar](50) NULL,
@@ -71,6 +106,16 @@ CREATE TABLE [dbo].[OUTNBRUKU](
 	[rukudate] [date] NULL
 )
 
+/*良品出库，需要报关*/
+CREATE TABLE [dbo].[OUTNBCHUKU](
+	[vender] [nvarchar](50) NULL,
+	[customer] [nvarchar](50) NULL,
+	[NBID] [nvarchar](50) NULL,
+	[NBSerial] [nvarchar](50) NULL,
+	[Model] [nvarchar](50) NULL,
+	[qty] [int] NULL,
+	[chukudate] [date] NULL
+)
 
 CREATE TABLE [dbo].[RatingLabel](
 	[机型] [nvarchar](50) NULL,
@@ -91,23 +136,6 @@ CREATE TABLE [dbo].[RatingLabel](
 	[CCLABEL] [nvarchar](50) NULL
 ) 
 
-/*材料库房*/
-create table materialhouse
-(
-Id INT PRIMARY KEY IDENTITY, 
-materialNo NVARCHAR(128) NOT NULL,/*料号*/
-number NVARCHAR(128), /*入库数量*/
-)
-
-/*原材料入库*/
-CREATE TABLE [dbo].[RuKu](
-	[countfile] [varchar](50) NULL,
-	[partsno] [varchar](50) NULL,
-	[qty] [int] NULL,
-	[price] [float] NULL,
-	[keyinman] [varchar](50) NULL,
-	[rukudate] [date] NULL
-)
 
 CREATE TABLE [dbo].[NBShouLiao](
 	[Id] [int] IDENTITY(1,1) NOT NULL,

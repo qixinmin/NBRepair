@@ -245,7 +245,6 @@ namespace NBRepair
                             }
                         }
 
-                       // MessageBox.Show(material);
                         cmd1.Clone();
                         querySdr.Close();
                         tableName = "NBShouLiao";
@@ -257,10 +256,8 @@ namespace NBRepair
                                          + "' where NewNBSerial = '" + this.NBSerial.Text.Trim() + "'or NBID = '" + this.NBSerial.Text.Trim() + "' ";
                         cmd.ExecuteNonQuery();
 
-
                         //  添加包材之类的到材料出库， 在包装段，先删除 keyinman  ID的记录
-                        ////////////////////////////////////
-                       
+                        ////////////////////////////////////                       
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                         tableName = "OUTNBRUKU";
@@ -269,7 +266,6 @@ namespace NBRepair
                         querySdr = cmd.ExecuteReader();
                         if (querySdr.HasRows == true)
                         {
-
                             cmd.CommandText = "update " + tableName + " set vender = '" + vender
                                       + "',customer = '" + customer + " "
                                       + "', NBID = '" + NBID + " "
@@ -279,29 +275,65 @@ namespace NBRepair
                                       + "' or NBSerial = '" + NBSerial + "'";
                             querySdr.Close();
                             cmd.ExecuteNonQuery();
-                           // MessageBox.Show("  Update   OUTNBRUKU  Save OK");//1S20KNA002CDPF12D33Z
+                            // MessageBox.Show("  Update   OUTNBRUKU  Save OK");//1S20KNA002CDPF12D33Z
                             //  1S  20KNA002CD  PF12D33Z
-
-
                         }
                         else
                         {
                             cmd.CommandText = "INSERT INTO " + tableName + " (vender,customer,NBID,NBSerial,Model,qty,rukudate)  VALUES('" +
-                            vender + "','" +
-                            customer + "','" +
-                            NBID + "','" +
-                            NBSerial + "','" +
-                            Model + "','" +
-                              1 + "','" +
-                             System.DateTime.Today.ToShortDateString() +
-                             "')";
+                                vender + "','" +
+                                customer + "','" +
+                                NBID + "','" +
+                                NBSerial + "','" +
+                                Model + "','" +
+                                1 + "','" +
+                                System.DateTime.Today.ToShortDateString() +
+                                "')";
                             querySdr.Close();
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("New  out    NBRUKU   Save OK");
+                        }                        
+                        //
+                        //update 料号数量
+                        cmd.CommandText = "select number from NBHouse where model='" + Model + "'";
+                        querySdr = cmd.ExecuteReader();
+                        string number = "";
+                        bool exist = false;
+                        while (querySdr.Read())
+                        {
+                            exist = true;
+                            number = querySdr[1].ToString();
+                            break;
+                        }
+                        querySdr.Close();
+
+                        if (number == null || number == "")
+                        {
+                            number = "0";
+                        }
+
+                        try
+                        {
+                            int totalLeft = Int32.Parse(number);
+                            int thistotal = totalLeft + 1;
+
+                            if (exist)
+                            {
+                                cmd.CommandText = "update NBHouse set number = '" + thistotal + " where model='" + Model + "'";
+                            }
+                            else
+                            {
+                                cmd.CommandText = "INSERT INTO NBHouse (number, materialNo ) VALUES('" + thistotal + "','" + Model + "')";
+                            }
+
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
                         }
 
                         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
                         tableName = "RatingLabel";
                         cmd.CommandText = "select *  from " + tableName + " where 料号 = '" + V_MTM_TBG + "' ";
                         querySdr = cmd.ExecuteReader();
@@ -344,10 +376,8 @@ namespace NBRepair
 
                             CodeSoft.POD.Variables.FormVariables.Item("V_DATE").Value = V_DATE.Replace("-", "");
 
-
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_MSATA").Value = V_KEYPARTS_MSATA; // V_KEYPARTS_SSHD
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_SSHD").Value = V_KEYPARTS_SSHD;
-
 
                             CodeSoft.POD.Variables.FormVariables.Item("V_SSN").Value = V_SSN;
                             CodeSoft.POD.Variables.FormVariables.Item("V_UUID").Value = V_UUID.Replace(" ", "");
@@ -358,7 +388,6 @@ namespace NBRepair
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_HDD").Value = V_KEYPARTS_HDD;//   V_IMEI  V_KEYPARTS_BT
                             CodeSoft.POD.Variables.FormVariables.Item("V_IMEI").Value = "";//   V_IMEI  V_KEYPARTS_BT
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_BT").Value = "--";//   V_IMEI  V_KEYPARTS_BT
-
 
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_SSD").Value = V_KEYPARTS_SSD;
                             CodeSoft.POD.Variables.FormVariables.Item("V_KEYPARTS_LCD").Value = V_KEYPARTS_LCD;
