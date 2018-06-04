@@ -65,6 +65,43 @@
     </Compile>
     <Compile Include="CodeSoft.cs" />
     <Compile Include="Conlist.cs" />
+    <Compile Include="custom\CompanyFixedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="custom\CompanyFixedForm.designer.cs">
+      <DependentUpon>CompanyFixedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="custom\GenerateWorkOrderBody.cs" />
+    <Compile Include="custom\GenerateWorkOrderHead.cs" />
+    <Compile Include="custom\OpeningStockClass.cs" />
+    <Compile Include="custom\OpeningStockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="custom\OpeningStockForm.designer.cs">
+      <DependentUpon>OpeningStockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="custom\RealStockClass.cs" />
+    <Compile Include="custom\RealStockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="custom\RealStockForm.designer.cs">
+      <DependentUpon>RealStockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="custom\ReturnCustomInfoImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="custom\ReturnCustomInfoImportForm.designer.cs">
+      <DependentUpon>ReturnCustomInfoImportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="custom\StockInOutClass.cs" />
+    <Compile Include="custom\StockInOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="custom\StockInOutForm.designer.cs">
+      <DependentUpon>StockInOutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="custom\WorkListBodyClass.cs" />
+    <Compile Include="custom\WorkListHeadClass.cs" />
     <Compile Include="EXCELIO.cs" />
     <Compile Include="LabelPrint.cs">
       <SubType>Form</SubType>
@@ -136,6 +173,21 @@
     </Compile>
     <EmbeddedResource Include="BOM.resx">
       <DependentUpon>BOM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="custom\CompanyFixedForm.resx">
+      <DependentUpon>CompanyFixedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="custom\OpeningStockForm.resx">
+      <DependentUpon>OpeningStockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="custom\RealStockForm.resx">
+      <DependentUpon>RealStockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="custom\ReturnCustomInfoImportForm.resx">
+      <DependentUpon>ReturnCustomInfoImportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="custom\StockInOutForm.resx">
+      <DependentUpon>StockInOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LabelPrint.resx">
       <DependentUpon>LabelPrint.cs</DependentUpon>

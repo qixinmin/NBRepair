@@ -57,8 +57,8 @@ namespace NBRepair
                         {
                             MessageBox.Show("没有这个料号");
                             this.NewNBSerial.Focus();
-
                         }
+
                         if (findok == true)
                         {
                             tableName = "OUTNBCHUKU";
@@ -76,23 +76,22 @@ namespace NBRepair
                                           + "' or NBSerial = '" + NBSerial + "'";
                                 querySdr.Close();
                                 cmd.ExecuteNonQuery();
-                              //  MessageBox.Show("  Update   chu Save OK");//1S20KNA002CDPF12D33Z
-                                //  1S  20KNA002CD  PF12D33Z
                             }
                             else
                             {
                                 cmd.CommandText = "INSERT INTO " + tableName + " (vender,customer,NBID,NBSerial,Model,qty,chukudate)  VALUES('" +
-                                vender + "','" +
-                                customer + "','" +
-                                NBID + "','" +
-                                NBSerial + "','" +
-                                Model + "','" +
-                                  1 + "','" +
-                                 System.DateTime.Today.ToShortDateString() +
-                                 "')";
+                                    vender + "','" +
+                                    customer + "','" +
+                                    NBID + "','" +
+                                    NBSerial + "','" +
+                                    Model + "','" +
+                                    1 + "','" +
+                                    //System.DateTime.Today.ToShortDateString() +
+                                    "1900/01/01" +//采用默认值，等更新海关资料的时候再更新时间
+                                    "')";
                                 querySdr.Close();
                                 cmd.ExecuteNonQuery();
-                               // MessageBox.Show("New  chu  Save OK");
+                                // MessageBox.Show("New  chu  Save OK");
                             }
                             cmd.Dispose();
                         }

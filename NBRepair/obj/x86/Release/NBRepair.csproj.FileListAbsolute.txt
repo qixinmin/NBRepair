@@ -41,12 +41,14 @@ D:\hbj\NBRepair\NBRepair\bin\Release\NBRepair.pdb
 D:\BaiduNetdiskDownload\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.ResolveComReference.cache
 D:\BaiduNetdiskDownload\NBRepair\NBRepair\obj\x86\Release\NBRepair.exe
 D:\BaiduNetdiskDownload\NBRepair\NBRepair\obj\x86\Release\NBRepair.pdb
-D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.ResolveComReference.cache
-D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.exe
-D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.pdb
 D:\维修系统\NBRepair\NBRepair\bin\Release\NBRepair.exe
 D:\维修系统\NBRepair\NBRepair\bin\Release\NBRepair.pdb
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.ResolveComReference.cache
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.BOM.resources
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.CompanyFixedForm.resources
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.OpeningStockForm.resources
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.RealStockForm.resources
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.StockInOutForm.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.LabelPrint.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.Main.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.MakeDatabase.resources
@@ -60,3 +62,6 @@ D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.ShipOut.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.StockIn.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.StockOut.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.GenerateResource.Cache
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.exe
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.pdb
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.ReturnCustomInfoImportForm.resources

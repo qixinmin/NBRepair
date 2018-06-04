@@ -20,7 +20,6 @@ namespace NBRepair
         private void button1_Click(object sender, EventArgs e)
         {
             if (this.NBSerial.Text.Trim() != "")
-              
             {
                 SqlConnection conn = new SqlConnection(Conlist.ConStr);
                 conn.Open();
@@ -40,14 +39,14 @@ namespace NBRepair
                         nbid = querySdr["NBID"].ToString();
                     }
                     querySdr.Close();
-                    cmd.CommandText = "update " + tableName + " set BatterySN = '" + this.BatterySN.Text.Trim().ToUpper ()
-                             
-                              + "',BatterySN1 = '" + this.frontbattery .Text.Trim().ToUpper() + " "
+                    cmd.CommandText = "update " + tableName + " set BatterySN = '" + this.BatterySN.Text.Trim().ToUpper()
+
+                              + "',BatterySN1 = '" + this.frontbattery.Text.Trim().ToUpper() + " "
 
                               + "',KBSN = '" + this.KBSN.Text.Trim().ToUpper() + " "
-                              + "', LCDSN = '" + this.LCDSN.Text.Trim().ToUpper() + " "
+                              + "',LCDSN = '" + this.LCDSN.Text.Trim().ToUpper() + " "
                               + "',MBSN = '" + this.MBSN.Text.Trim().ToUpper() + " "
-                                + "',MBPN = '" + this.MBPN.Text.Trim().ToUpper() + " "
+                              + "',MBPN = '" + this.MBPN.Text.Trim().ToUpper() + " "
 
                               + "',MBMAC = '" + this.MBMAC.Text.Trim().ToUpper() + " "
                               + "',Memory1SN = '" + this.Memory1SN.Text.Trim().ToUpper() + " "
@@ -55,7 +54,7 @@ namespace NBRepair
                               + "',HDDSN = '" + this.HDDSN.Text.Trim().ToUpper() + " "
                               + "',SSDSN = '" + this.SSDSN.Text.Trim().ToUpper() + " "
                               + "',WLANSN = '" + this.WLANSN.Text.Trim().ToUpper() + " "
-                               + "',WLANMAC = '" + this.WLANMAC.Text.Trim().ToUpper() + " "
+                              + "',WLANMAC = '" + this.WLANMAC.Text.Trim().ToUpper() + " "
                               + "',FANSN = '" + this.FANSN.Text.Trim().ToUpper() + " "
                               + "',COVERSN = '" + this.COVERSN.Text.Trim().ToUpper() + " "
                               + "',BRZELSN = '" + this.BRZELSN.Text.Trim().ToUpper() + " "
@@ -64,26 +63,27 @@ namespace NBRepair
                               + "',OTHERSN = '" + this.OTHERSN.Text.Trim().ToUpper() + " "
                               + "',RepairDesc = '" + this.RepairDesc.Text.Trim().ToUpper() + " "
                               + "',RepairMan = '" + this.RepairMan.Text.Trim().ToUpper() + " "
-                              + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
+                             // + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
+                              + "',RepairDate ='1900/01/01 "//在后续良品入库的时候把时间更新一下，那个时候再生成工单表头与表头
                               + "',Status = '待测 "
 
                               + "' where NBSerial = '" + this.NBSerial.Text.Trim().ToUpper()
-                            + "' or NBID = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
+                              + "' or NBID = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
 
 
                     cmd.ExecuteNonQuery();
-                   
+
                     this.NBSerial.Focus();
                     ok = true;
                     if (ok == true)
                     {
                         tableName = "ChuKu";
-                        cmd.CommandText = "delete   from " + tableName + " where  countfile = '" + nbid  + "' ";
+                        cmd.CommandText = "delete   from " + tableName + " where  countfile = '" + nbid + "' ";
                         cmd.ExecuteNonQuery();
                         string[] str = { this.COVERSN.Text.ToUpper(), this.BRZELSN.Text.ToUpper(), this.UPSN.Text.ToUpper(), this.LOWSN.Text.ToUpper(), this.OTHERSN.Text.ToUpper() };
                         for (int i = 0; i < str.Length; i = i + 1)
                         {
-                            if (str[i] != "" && str[i].Length >=11)
+                            if (str[i] != "" && str[i].Length >= 11)
                             {
                                 if (str[i].Length > 11)
                                 {
@@ -168,7 +168,7 @@ namespace NBRepair
                                     {
                                         int totalLeft = Int32.Parse(left_number);
                                         int thistotal = totalLeft + 1;
-                                        
+
                                         if (exist)
                                         {
                                             cmd.CommandText = "update materialNgHouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
@@ -187,7 +187,7 @@ namespace NBRepair
                                 }
                             }
                         }
-                       // MessageBox.Show("New Save OK");
+                        // MessageBox.Show("New Save OK");
                         Clear();
                         cmd.Dispose();
                         cmd.Dispose();
@@ -199,13 +199,14 @@ namespace NBRepair
                     }
                     MessageBox.Show("  Update Save OK");
                 }
-              
+
                 conn.Close();
 
                 queryLastesttoday();
                 Clear();
             }
         }
+
         private void queryLastesttoday()
         {
             try

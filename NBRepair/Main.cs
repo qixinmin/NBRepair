@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SaledServices;
+using SaledServices.CustomsExport;
 
 namespace NBRepair
 {
@@ -209,7 +211,62 @@ namespace NBRepair
             labelprine.Show();
         }
 
-      
-      
+        private ReturnCustomInfoImportForm rsimf;
+        private void 上传出货海关信息ToolStripMenuItem_Click(object sender, EventArgs e)
+        {             
+            if (rsimf == null || rsimf.IsDisposed)
+            {
+                rsimf = new ReturnCustomInfoImportForm();
+                rsimf.MdiParent = this;
+            }
+
+            //rsimf.WindowState = FormWindowState.Maximized;
+            rsimf.BringToFront();
+            rsimf.Show();
+        }
+
+        private OpeningStockForm openingstockform;
+        private void 期初库存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            if (openingstockform == null || openingstockform.IsDisposed)
+            {
+                openingstockform = new OpeningStockForm();
+                openingstockform.MdiParent = this;
+            }
+
+            // openingstockform.WindowState = FormWindowState.Maximized;
+            openingstockform.BringToFront();
+            openingstockform.Show();
+        }
+
+        private RealStockForm realstockform;
+        private void 实盘库存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (realstockform == null || realstockform.IsDisposed)
+            {
+                realstockform = new RealStockForm();
+                realstockform.MdiParent = this;
+            }
+
+            // realstockform.WindowState = FormWindowState.Maximized;
+            realstockform.BringToFront();
+            realstockform.Show();
+        }
+
+        private StockInOutForm stockInOutform;
+        private void 出入库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            if (stockInOutform == null || stockInOutform.IsDisposed)
+            {
+                stockInOutform = new StockInOutForm();
+                stockInOutform.MdiParent = this;
+            }
+
+            // stockInOutform.WindowState = FormWindowState.Maximized;
+            stockInOutform.BringToFront();
+            stockInOutform.Show();
+        }
+
     }
 }

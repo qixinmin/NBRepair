@@ -87,7 +87,7 @@ CREATE TABLE [dbo].[INNBCHUKU](
 	[chukudate] [date] NULL
 ) 
 
-/*不良品材料库房*/
+/*良品整机库房*/
 create table NBHouse
 (
 Id INT PRIMARY KEY IDENTITY, 
@@ -115,6 +115,15 @@ CREATE TABLE [dbo].[OUTNBCHUKU](
 	[Model] [nvarchar](50) NULL,
 	[qty] [int] NULL,
 	[chukudate] [date] NULL
+)
+
+/*良品出库上传海关信息*/
+CREATE TABLE repaired_out_house_excel_table(
+Id INT PRIMARY KEY IDENTITY, 
+track_serial_no NVARCHAR(128) NOT NULL, /*跟踪条码*/
+custom_materialNo NVARCHAR(128) NOT NULL,/*客户料号*/
+declare_number NVARCHAR(128), /*报关单号*/
+input_date date, /*输入日期*/
 )
 
 CREATE TABLE [dbo].[RatingLabel](

@@ -275,11 +275,17 @@ namespace NBRepair
                                       + "' or NBSerial = '" + NBSerial + "'";
                             querySdr.Close();
                             cmd.ExecuteNonQuery();
-                            // MessageBox.Show("  Update   OUTNBRUKU  Save OK");//1S20KNA002CDPF12D33Z
-                            //  1S  20KNA002CD  PF12D33Z
+                            
                         }
                         else
                         {
+                            //良品入库的时候，这个时候再更新维修时间，生成工单表头与工单表体
+                            querySdr.Close();
+                            cmd.CommandText = "update NBShouLiao set RepairDate ='" + System.DateTime.Today.ToShortDateString()
+                                     + "' where NBID = '" + NBID
+                                     + "' or NBSerial = '" + NBSerial + "'";                            
+                            cmd.ExecuteNonQuery();
+
                             cmd.CommandText = "INSERT INTO " + tableName + " (vender,customer,NBID,NBSerial,Model,qty,rukudate)  VALUES('" +
                                 vender + "','" +
                                 customer + "','" +
@@ -289,7 +295,7 @@ namespace NBRepair
                                 1 + "','" +
                                 System.DateTime.Today.ToShortDateString() +
                                 "')";
-                            querySdr.Close();
+                            //querySdr.Close();
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("New  out    NBRUKU   Save OK");
                         }                        
