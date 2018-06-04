@@ -37,7 +37,7 @@ namespace SaledServices.CustomsExport
             OpeningStockClass openingstock = new OpeningStockClass();
             List<StoreInit> storeInitList = new List<StoreInit>();
 
-            string seq_no = DateTime.Now.ToString("yyyyMMdd") + "2005" + "1";//日期+类型+序号
+            string seq_no = DateTime.Now.ToString("yyyyMMdd") + "2005" + "02";//日期+类型+序号 01代表维修， 02代表整机
 
             string boxtype = "2005";//代码 
             string flowstateg = "";

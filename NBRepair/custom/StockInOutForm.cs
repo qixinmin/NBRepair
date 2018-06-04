@@ -85,7 +85,7 @@ namespace SaledServices.CustomsExport
 
                 GenerateWorkOrderBody generateWorkOrderBody = null;
 
-                string seq_no = dt.ToString("yyyyMMdd") + "4001" + "1";//日期+类型,后面需要加入序号信息
+                string seq_no = dt.ToString("yyyyMMdd") + "4001" + "02";//日期+类型,后面需要加入序号信息01代表维修， 02代表整机
                 string boxtype = "4001";//代码
                 string flowstateg = "";
                 string trade_code = "";

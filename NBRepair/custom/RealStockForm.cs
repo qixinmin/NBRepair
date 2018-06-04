@@ -36,7 +36,7 @@ namespace SaledServices.CustomsExport
             RealStockClass realstock = new RealStockClass();
             List<StoreAmount> storeAmountList = new List<StoreAmount>();
 
-            string seq_no = DateTime.Now.ToString("yyyyMMdd") + "2006" + "1";//日期+类型+序号
+            string seq_no = DateTime.Now.ToString("yyyyMMdd") + "2006" + "02";//日期+类型+序号01代表维修， 02代表整机
             string boxtype = "2006";//代码
             string flowstateg = "";
             string trade_code = "";

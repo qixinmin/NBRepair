@@ -32,7 +32,7 @@ namespace SaledServices.CustomsExport
             this.ems_no = emsNo;
             this.startTime = currentday.ToString("yyyy/MM/dd");
             this.endTime = currentday.ToString("yyyy/MM/dd");
-            seq_no = currentday.ToString("yyyyMMdd") + "4003" + "1";
+            seq_no = currentday.ToString("yyyyMMdd") + "4003" + "02";//01代表维修， 02代表整机
         }
 
         public void addWorkOrderList(List<TrackNoCustomRelation> TrackNoCustomRelationList, ref Dictionary<string, string> _71bomDic)

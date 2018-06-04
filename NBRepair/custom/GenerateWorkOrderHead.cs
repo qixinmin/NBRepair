@@ -28,7 +28,7 @@ namespace SaledServices.CustomsExport
             this.trade_code = tradeCode;
             this.ems_no = emsNo;
             currentDay = currentday;
-            seq_no = currentday.ToString("yyyyMMdd") + "4002" + "1";
+            seq_no = currentday.ToString("yyyyMMdd") + "4002" + "02";//01代表维修， 02代表整机
         }
 
         public void addWorkListHeads(List<TrackNoCustomRelation> TrackNoCustomRelationList, bool isGood,ref Dictionary<string, string> materialbomDic)
