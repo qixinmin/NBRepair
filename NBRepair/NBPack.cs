@@ -279,13 +279,6 @@ namespace NBRepair
                         }
                         else
                         {
-                            //良品入库的时候，这个时候再更新维修时间，生成工单表头与工单表体
-                            querySdr.Close();
-                            cmd.CommandText = "update NBShouLiao set RepairDate ='" + System.DateTime.Today.ToShortDateString()
-                                     + "' where NBID = '" + NBID
-                                     + "' or NBSerial = '" + NBSerial + "'";                            
-                            cmd.ExecuteNonQuery();
-
                             cmd.CommandText = "INSERT INTO " + tableName + " (vender,customer,NBID,NBSerial,Model,qty,rukudate)  VALUES('" +
                                 vender + "','" +
                                 customer + "','" +
@@ -365,14 +358,13 @@ namespace NBRepair
                                 V_KEYPARTS_MSATA = querySdr["MSATA"].ToString().Trim();
 
                                 V_KEYPARTS_SSHD = querySdr["SSHD"].ToString().Trim();
-
                             }
                         }
                         querySdr.Close();
+
                         V_UPC = V_UPC_TITLE.Substring(0, V_UPC_TITLE.Length - 1);
                         V_DATE = System.DateTime.Today.ToString("yyyy-MM-dd");
                         V_PO_QTY = "1";
-                        //MessageBox.Show(volat + "      " + current);
                         if (lihao == true)
                         {
                             CodeSoft.POD.Variables.FormVariables.Item("V_UPC_TITLE").Value = "UPC CODE:" + V_UPC_TITLE;
@@ -429,21 +421,17 @@ namespace NBRepair
                         this.NewAdapterSN.Text = ""; this.NBSerial.Text = ""; this.NewPowerCodeSN.Text = "";
                         this.NBSerial.Focus();
 
-
                         querySdr.Close();
-
                         cmd.Dispose();
                     }
                 }
                 conn.Close();
 
                 queryLastesttoday();
-
             }
             else
             {
                 MessageBox.Show("资料不全");
-
             }
         }
         private void queryLastesttoday()

@@ -37,7 +37,7 @@
             // filePath
             // 
             this.filePath.Font = new System.Drawing.Font("SimSun", 42F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.filePath.Location = new System.Drawing.Point(56, 49);
+            this.filePath.Location = new System.Drawing.Point(12, 41);
             this.filePath.Name = "filePath";
             this.filePath.Size = new System.Drawing.Size(965, 71);
             this.filePath.TabIndex = 0;
@@ -45,7 +45,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("SimSun", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(196, 270);
+            this.button1.Location = new System.Drawing.Point(174, 196);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(203, 131);
             this.button1.TabIndex = 2;
@@ -56,7 +56,7 @@
             // importButton
             // 
             this.importButton.Font = new System.Drawing.Font("SimSun", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.importButton.Location = new System.Drawing.Point(597, 270);
+            this.importButton.Location = new System.Drawing.Point(538, 196);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(204, 131);
             this.importButton.TabIndex = 3;
@@ -72,7 +72,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1522, 673);
+            this.ClientSize = new System.Drawing.Size(1006, 432);
             this.Controls.Add(this.importButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.filePath);

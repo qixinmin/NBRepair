@@ -63,8 +63,7 @@ namespace NBRepair
                               + "',OTHERSN = '" + this.OTHERSN.Text.Trim().ToUpper() + " "
                               + "',RepairDesc = '" + this.RepairDesc.Text.Trim().ToUpper() + " "
                               + "',RepairMan = '" + this.RepairMan.Text.Trim().ToUpper() + " "
-                             // + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
-                              + "',RepairDate ='1900/01/01 "//在后续良品入库的时候把时间更新一下，那个时候再生成工单表头与表头
+                              + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
                               + "',Status = '待测 "
 
                               + "' where NBSerial = '" + this.NBSerial.Text.Trim().ToUpper()

@@ -48,7 +48,8 @@ namespace SaledServices.CustomsExport
                 cmd.Connection = mConn;
                 cmd.CommandType = CommandType.Text;
 
-                cmd.CommandText = "select NBSerial, COVERSN, BRZELSN,UPSN,LOWSN,OTHERSN,RepairDate from NBShouLiao where RepairDate between '" + startTime + "' and '" + endTime + "'";
+                //使用PackDate日期而不是采用维修日期，因为pack的日期确定了全部的使用材料
+                cmd.CommandText = "select NBSerial, COVERSN, BRZELSN,UPSN,LOWSN,OTHERSN,RepairDate from NBShouLiao where PackDate between '" + startTime + "' and '" + endTime + "'";
                 SqlDataReader querySdr = cmd.ExecuteReader();
 
                 while (querySdr.Read())
