@@ -44,6 +44,9 @@ namespace SaledServices.CustomsExport
             string trade_code = "";
             string ems_no = "";
 
+            trade_code = "3401560011";
+            ems_no = "H33138000002";
+
             string status = "A";
             try
             {
@@ -52,282 +55,60 @@ namespace SaledServices.CustomsExport
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
-                cmd.CommandType = CommandType.Text;
+                cmd.CommandType = CommandType.Text;            
 
-                //查询71bom
-                Dictionary<string, string> _71bomDic = new Dictionary<string, string>();
-                cmd.CommandText = "select distinct material_mpn,material_vendor_pn from LCFC71BOM_table";
-                SqlDataReader querySdr = cmd.ExecuteReader();
+                //1 读取材料库房信息
+                cmd.CommandText = "select materialNo,number from materialhouse where materialNo!='' and number !='0'";
+                SqlDataReader querySdr = cmd.ExecuteReader();                
                 while (querySdr.Read())
                 {
-                    if (_71bomDic.ContainsKey(querySdr[0].ToString().Trim()) == false)
-                    {
-                        _71bomDic.Add(querySdr[0].ToString().Trim(), querySdr[1].ToString().Trim());
-                    }
-                }
-                querySdr.Close();
-                //查询物料对照表
-                Dictionary<string, string> materialbomDic = new Dictionary<string, string>();
-                cmd.CommandText = "select distinct custommaterialNo,vendormaterialNo from MBMaterialCompare";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    if (materialbomDic.ContainsKey(querySdr[0].ToString().Trim()) == false)
-                    {
-                        materialbomDic.Add(querySdr[0].ToString().Trim(), querySdr[1].ToString().Trim());
-                    }
+                    StoreInit init1 = new StoreInit();
+                    init1.ems_no = ems_no;
+                    init1.cop_g_no = querySdr[0].ToString();
+                    init1.qty = querySdr[1].ToString();                    
+                    init1.unit = "007";                    
+                    init1.goods_nature = "I";//代码
+                    init1.bom_version = "";
+                    init1.check_date = Untils.getCustomCurrentDate();
+                    init1.date_type = "C";//代码
+                    init1.whs_code = "";
+                    init1.location_code = "";
+                    init1.note = "";
+                    storeInitList.Add(init1);
                 }
                 querySdr.Close();
 
-
-                cmd.CommandText = "select indentifier, book_number from company_fixed_table";
+                //2 整机良品库
+                cmd.CommandText = "select model,number from NBHouse where model!='' and number !='0'";
                 querySdr = cmd.ExecuteReader();
+                while (querySdr.Read())
+                {
+                    StoreInit init1 = new StoreInit();
+                    init1.ems_no = ems_no;
+                    init1.cop_g_no = querySdr[0].ToString();
+                    init1.qty = querySdr[1].ToString();
+                    init1.unit = "007";
+                    init1.goods_nature = "I";//代码
+                    init1.bom_version = "";
+                    init1.check_date = Untils.getCustomCurrentDate();
+                    init1.date_type = "C";//代码
+                    init1.whs_code = "";
+                    init1.location_code = "";
+                    init1.note = "";
+                    storeInitList.Add(init1);
+                }
+                querySdr.Close();
                
-                while (querySdr.Read())
-                {
-                    trade_code = querySdr[0].ToString();
-                    ems_no = querySdr[1].ToString();
-                }
-                querySdr.Close();
-
-                Dictionary<string, int> receiveOrderDic = new Dictionary<string, int>();
-                //1 从收货表中查询信息
-                cmd.CommandText = "select custom_materialNo, receivedNum,returnNum,cid_number from receiveOrder where _status !='return'";
+                //3 材料不良品库房
+                cmd.CommandText = "select materialNo,number from materialNgHouse where materialNo!='' and number !='0'";
                 querySdr = cmd.ExecuteReader();
-                int receiveNum=0, returnNum=0, cidNum = 0;
-                while (querySdr.Read())
-                {
-                    receiveNum = Int32.Parse(querySdr[1].ToString());
-                    try
-                    {
-                       returnNum = Int32.Parse(querySdr[2].ToString());
-                    }
-                    catch(Exception ex)
-                    {
-                        returnNum = 0;
-                    }
-                    try
-                    {
-                       cidNum = Int32.Parse(querySdr[3].ToString());
-                    }
-                    catch(Exception ex)
-                    {
-                        cidNum = 0;
-                    }
-
-                    if(receiveOrderDic.ContainsKey(querySdr[0].ToString()))
-                    {
-                        //加上原来的数量
-                        receiveOrderDic[querySdr[0].ToString()] = receiveOrderDic[querySdr[0].ToString()] + receiveNum - returnNum - cidNum;
-                    }
-                    else
-                    {
-                        receiveOrderDic.Add(querySdr[0].ToString(), receiveNum - returnNum - cidNum);
-                    }                    
-                }
-                querySdr.Close();
-
-                foreach (KeyValuePair<string, int> kvp in receiveOrderDic)
-                {                    
-                    StoreInit init1 = new StoreInit();
-                    init1.ems_no = ems_no;
-
-                    string temp = kvp.Key;
-                    if (temp.Length == 10 && temp.StartsWith("000"))
-                    {
-                        temp = temp.Substring(3);
-                    }
-
-                    init1.cop_g_no = temp;//维修的板子，使用客户料号
-                    init1.qty = kvp.Value.ToString();
-                    init1.unit = "007";//固定单位
-                    init1.goods_nature = "I";//代码
-                    init1.bom_version = "";
-                    init1.check_date = Untils.getCustomCurrentDate();
-                    init1.date_type = "C";//代码
-                    init1.whs_code = "";
-                    init1.location_code = "";
-                    init1.note = "";
-                    storeInitList.Add(init1);
-                }
-
-                //2 读取良品库房信息
-                Dictionary<string, string> mpn_unit = new Dictionary<string, string>();
-                cmd.CommandText = "select distinct mpn,declare_unit from stock_in_sheet where mpn !=''";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    if (mpn_unit.ContainsKey(querySdr[0].ToString()) == false)
-                    {
-                        mpn_unit.Add(querySdr[0].ToString(), querySdr[1].ToString());
-                    }
-
-                }
-                querySdr.Close();
-
-                cmd.CommandText = "select mpn, number from store_house where mpn !='' and number !='0'";
-                querySdr = cmd.ExecuteReader();                
                 while (querySdr.Read())
                 {
                     StoreInit init1 = new StoreInit();
                     init1.ems_no = ems_no;
-
-                    string currentDeclear ="";
-                    if(_71bomDic.ContainsKey( querySdr[0].ToString()))
-                    {
-                        currentDeclear = _71bomDic[querySdr[0].ToString()];
-                    }
-                    else if(currentDeclear == "")
-                    {
-                        currentDeclear = querySdr[0].ToString();//buffer主板直接用71料号存储的                       
-                        if (currentDeclear.Length == 10 && currentDeclear.StartsWith("000"))
-                        {
-                            currentDeclear = currentDeclear.Substring(3);
-                        }
-                    }
-
-                    init1.cop_g_no = currentDeclear;//因为报关原因，需要改成71料号（联想料号）TODO，包括材料与买的MB，物料对照表与71bom
+                    init1.cop_g_no = querySdr[0].ToString();
                     init1.qty = querySdr[1].ToString();
-                    try
-                    {
-                        init1.unit = Untils.getCustomCode(mpn_unit[querySdr[0].ToString()]);
-                    }
-                    catch (Exception ex)
-                    {
-                        init1.unit = "007";
-                    }
-                    init1.goods_nature = "I";//代码
-                    init1.bom_version = "";
-                    init1.check_date = Untils.getCustomCurrentDate();
-                    init1.date_type = "C";//代码
-                    init1.whs_code = "";
-                    init1.location_code = "";
-                    init1.note = "";
-                    storeInitList.Add(init1);
-                }
-                querySdr.Close();
-
-                //3 读取MB/SMT/BGA不良品信息，此处的MB是由CID过来的，所以直接用原始料号即可
-                cmd.CommandText = "select mpn, number from store_house_ng where mpn !='' and number !='0'";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    StoreInit init1 = new StoreInit();
-                    init1.ems_no = ems_no;
-                    
-                    string currentDeclear = "";
-                    if (_71bomDic.ContainsKey(querySdr[0].ToString()))
-                    {
-                        currentDeclear = _71bomDic[querySdr[0].ToString()] + "-1";//海关要求料号不一样，加-1
-                    }
-                    else if (currentDeclear == "")
-                    {
-                        currentDeclear = querySdr[0].ToString();//buffer主板直接用71料号存储的                       
-                        if (currentDeclear.Length == 10 && currentDeclear.StartsWith("000"))
-                        {
-                            currentDeclear = currentDeclear.Substring(3);
-                        }
-                    }
-
-                    init1.cop_g_no = currentDeclear;//因为报关原因，需要改成71料号（联想料号）TODO
-                    init1.qty = querySdr[1].ToString();                   
-
-                    try
-                    {
-                        init1.unit = Untils.getCustomCode(mpn_unit[querySdr[0].ToString()]);
-                    }
-                    catch (Exception ex)
-                    {
-                        init1.unit = "007";
-                    }
-                    init1.goods_nature = "I";//代码
-                    init1.bom_version = "";
-                    init1.check_date = Untils.getCustomCurrentDate();
-                    init1.date_type = "C";//代码
-                    init1.whs_code = "";
-                    init1.location_code = "";
-                    init1.note = "";
-                    storeInitList.Add(init1);
-                }
-                querySdr.Close();
-
-                //3-1 读取MB Buffer不良品信息，此处的MB是由良品库过来的，所以直接用原始料号71即可
-                cmd.CommandText = "select mpn, number from store_house_ng_buffer_mb where mpn !='' and number !='0'";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    StoreInit init1 = new StoreInit();
-                    init1.ems_no = ems_no;
-
-                    string currentDeclear = querySdr[0].ToString().Trim();
-
-                    init1.cop_g_no = currentDeclear;//因为报关原因，需要改成71料号（联想料号）TODO
-                    init1.qty = querySdr[1].ToString();
-
-                    try
-                    {
-                        init1.unit = Untils.getCustomCode(mpn_unit[querySdr[0].ToString()]);
-                    }
-                    catch (Exception ex)
-                    {
-                        init1.unit = "007";
-                    }
-                    init1.goods_nature = "I";//代码
-                    init1.bom_version = "";
-                    init1.check_date = Untils.getCustomCurrentDate();
-                    init1.date_type = "C";//代码
-                    init1.whs_code = "";
-                    init1.location_code = "";
-                    init1.note = "";
-                    storeInitList.Add(init1);
-                }
-                querySdr.Close();    
-
-                //4 读取MB待维修库信息
-                cmd.CommandText = "select custom_materialNo,leftNumber from wait_repair_left_house_table where leftNumber !='0'";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    StoreInit init1 = new StoreInit();
-                    init1.ems_no = ems_no;
-
-                    string temp = querySdr[0].ToString();
-                    if (temp.Length == 10 && temp.StartsWith("000"))
-                    {
-                        temp = temp.Substring(3);
-                    }
-
-                    init1.cop_g_no = temp;//正常使用客户料号
-                    init1.qty = querySdr[1].ToString();
-                    init1.unit = "007";//固定单位
-                    init1.goods_nature = "I";//代码
-                    init1.bom_version = "";
-                    init1.check_date = Untils.getCustomCurrentDate();
-                    init1.date_type = "C";//代码
-                    init1.whs_code = "";
-                    init1.location_code = "";
-                    init1.note = "";
-                    storeInitList.Add(init1);
-                }
-                querySdr.Close();
-
-                //5 读取MB良品库信息
-                cmd.CommandText = "select custom_materialNo, leftNumber from repaired_left_house_table where leftNumber !='0'";
-                querySdr = cmd.ExecuteReader();
-                while (querySdr.Read())
-                {
-                    StoreInit init1 = new StoreInit();
-                    init1.ems_no = ems_no;
-
-                    string temp = querySdr[0].ToString();
-                    if (temp.Length == 10 && temp.StartsWith("000"))
-                    {
-                        temp = temp.Substring(3);
-                    }
-
-                    init1.cop_g_no = temp;//正常使用客户料号
-                    init1.qty = querySdr[1].ToString();
-                    init1.unit = "007";//固定单位
+                    init1.unit = "007";
                     init1.goods_nature = "I";//代码
                     init1.bom_version = "";
                     init1.check_date = Untils.getCustomCurrentDate();

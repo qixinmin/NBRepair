@@ -35,7 +35,7 @@ namespace SaledServices.CustomsExport
             seq_no = currentday.ToString("yyyyMMdd") + "4003" + "02";//01代表维修， 02代表整机
         }
 
-        public void addWorkOrderList(List<TrackNoCustomRelation> TrackNoCustomRelationList, ref Dictionary<string, string> _71bomDic)
+        public void addWorkOrderList()
         {
             try
             {
@@ -48,42 +48,72 @@ namespace SaledServices.CustomsExport
                 cmd.Connection = mConn;
                 cmd.CommandType = CommandType.Text;
 
-                //for smt材料
-                cmd.CommandText = "select track_serial_no, material_mpn,thisNumber,input_date from fru_smt_used_record where input_date between '" + startTime + "' and '" + endTime + "'";
+                cmd.CommandText = "select NBSerial, COVERSN, BRZELSN,UPSN,LOWSN,OTHERSN,RepairDate from NBShouLiao where RepairDate between '" + startTime + "' and '" + endTime + "'";
                 SqlDataReader querySdr = cmd.ExecuteReader();
 
                 while (querySdr.Read())
                 {
-                    MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
-                    MaterialCustomRelationTemp.id = querySdr[0].ToString();
-
-                    if(_71bomDic.ContainsKey(querySdr[1].ToString()) == false)
+                    if (querySdr[1].ToString().Trim() != "")
                     {
-                        MessageBox.Show(querySdr[1].ToString()+"在bom表中不存在！");
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);          
                     }
 
-                    MaterialCustomRelationTemp.mpn = _71bomDic[querySdr[1].ToString()];//因为报关原因，需要改成71料号（联想料号）done
-                    MaterialCustomRelationTemp.num = querySdr[2].ToString();
-                    MaterialCustomRelationTemp.date = querySdr[3].ToString();
+                    if (querySdr[2].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[2].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
 
-                    MaterialCustomRelationList.Add(MaterialCustomRelationTemp);                   
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[3].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[3].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[4].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[4].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[5].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[5].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }                            
                 }
                 querySdr.Close();
-
-                if (MaterialCustomRelationList.Count > 0)
-                {
-                    foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
-                    {
-                        cmd.CommandText = "select declare_unit from stock_in_sheet where mpn ='" + materialTemp.mpn + "'";
-                        querySdr = cmd.ExecuteReader();
-                        while (querySdr.Read())
-                        {
-                            materialTemp.declare_unit = querySdr[0].ToString();
-                            break;//只取一次信息即可
-                        }
-                        querySdr.Close();
-                    }
-                }
 
                 foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
                 {
@@ -91,66 +121,14 @@ namespace SaledServices.CustomsExport
                     init1.wo_no = materialTemp.id;
                     init1.take_date = Untils.getCustomDate(materialTemp.date);
                     init1.goods_nature = "I";
-                    init1.cop_g_no = materialTemp.mpn;//因为报关原因，需要改成71料号（联想料号）done
+                    init1.cop_g_no = materialTemp.mpn;
                     init1.qty = materialTemp.num;
                     init1.unit =Untils.getCustomCode(materialTemp.declare_unit);
                     init1.emo_no = ems_no;
 
                     workOrderList.Add(init1);
                 }
-
-                //for bga材料
-                MaterialCustomRelationList.Clear();
-                cmd.CommandText = "select track_serial_no,BGAPN,repair_date from bga_repair_record_table where bga_repair_result!='BGA待换' and repair_date between '" + startTime + "' and '" + endTime + "'";
-                querySdr = cmd.ExecuteReader();
-
-                while (querySdr.Read())
-                {
-                    MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
-                    MaterialCustomRelationTemp.id = querySdr[0].ToString();
-
-                    if (_71bomDic.ContainsKey(querySdr[1].ToString()) == false)
-                    {
-                        MessageBox.Show(querySdr[1].ToString() + "在bom表中不存在！");
-                    }
-
-                    MaterialCustomRelationTemp.mpn = _71bomDic[querySdr[1].ToString()];//因为报关原因，需要改成71料号（联想料号）done
-                    MaterialCustomRelationTemp.date = querySdr[2].ToString();
-                    MaterialCustomRelationTemp.num = "1";
-
-                    MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
-                }
-                querySdr.Close();
-
-                if (MaterialCustomRelationList.Count > 0)
-                {
-                    foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
-                    {
-                        cmd.CommandText = "select declare_unit from stock_in_sheet where mpn ='" + materialTemp.mpn + "'";
-                        querySdr = cmd.ExecuteReader();
-                        while (querySdr.Read())
-                        {
-                            materialTemp.declare_unit = querySdr[0].ToString();
-                            break;//只取一次信息即可
-                        }
-                        querySdr.Close();
-                    }
-                }
-
-                foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
-                {
-                    WorkOrderList init1 = new WorkOrderList();
-                    init1.wo_no = materialTemp.id;
-                    init1.take_date = Untils.getCustomDate(materialTemp.date);
-                    init1.goods_nature = "I";
-                    init1.cop_g_no = materialTemp.mpn;//因为报关原因，需要改成71料号（联想料号）done
-                    init1.qty = materialTemp.num;
-                    init1.unit = Untils.getCustomCode(materialTemp.declare_unit);
-                    init1.emo_no = ems_no;
-
-                    workOrderList.Add(init1);
-                }
-
+                
                 mConn.Close();
             }
             catch (Exception ex)

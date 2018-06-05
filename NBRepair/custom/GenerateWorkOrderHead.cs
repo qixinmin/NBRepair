@@ -31,30 +31,15 @@ namespace SaledServices.CustomsExport
             seq_no = currentday.ToString("yyyyMMdd") + "4002" + "02";//01代表维修， 02代表整机
         }
 
-        public void addWorkListHeads(List<TrackNoCustomRelation> TrackNoCustomRelationList, bool isGood,ref Dictionary<string, string> materialbomDic)
+        public void addWorkListHeads(List<TrackNoCustomRelation> TrackNoCustomRelationList)
         {
-
             foreach (TrackNoCustomRelation trackTemp in TrackNoCustomRelationList)
             {
                 WorkOrderHead init1 = new WorkOrderHead();
                 init1.wo_no = trackTemp.trackno;
                 init1.wo_date = Untils.getCustomDate(trackTemp.date);
                 init1.goods_nature = "E";
-
-                //if (isGood)
-                //{
-                string temp = trackTemp.custom_materialNo;
-                if (temp.Length == 10 && temp.StartsWith("000"))
-                {
-                    temp = temp.Substring(3);
-                }
-
-                init1.cop_g_no = temp;//此处要区分对待， 如果良品入库要用正常料号，不良品入库用71料号,之前已经改过，这里直接使用
-                //}
-                //else
-                //{
-                //    init1.cop_g_no = materialbomDic[trackTemp.custom_materialNo];
-                //}
+                init1.cop_g_no = trackTemp.custom_materialNo;                
                 init1.qty = "1";
                 init1.unit = Untils.getCustomCode(trackTemp.declare_unit);
                 init1.emo_no = ems_no;

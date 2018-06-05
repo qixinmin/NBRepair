@@ -53,6 +53,8 @@
             this.UUID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label10 = new System.Windows.Forms.Label();
+            this.declearNumbeTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -163,7 +165,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Lime;
             this.button1.Font = new System.Drawing.Font("SimSun", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(134, 510);
+            this.button1.Location = new System.Drawing.Point(133, 540);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(292, 197);
             this.button1.TabIndex = 10;
@@ -304,17 +306,38 @@
             this.dataGridView2.Size = new System.Drawing.Size(1169, 569);
             this.dataGridView2.TabIndex = 35;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(60, 491);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(106, 24);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "报关单号";
+            // 
+            // declearNumbeTextBox
+            // 
+            this.declearNumbeTextBox.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.declearNumbeTextBox.Location = new System.Drawing.Point(194, 488);
+            this.declearNumbeTextBox.Name = "declearNumbeTextBox";
+            this.declearNumbeTextBox.Size = new System.Drawing.Size(292, 35);
+            this.declearNumbeTextBox.TabIndex = 30;
+            this.declearNumbeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ConfigDesc_KeyPress);
+            // 
             // NBShouLiao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1768, 817);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.UUID);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.FunctionOK);
+            this.Controls.Add(this.declearNumbeTextBox);
             this.Controls.Add(this.ConfigDesc);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.CheckMan);
@@ -371,5 +394,7 @@
         private System.Windows.Forms.TextBox UUID;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox declearNumbeTextBox;
     }
 }

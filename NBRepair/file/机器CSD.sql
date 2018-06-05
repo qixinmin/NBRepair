@@ -45,6 +45,7 @@ number NVARCHAR(128), /*入库数量*/
 
 /*原材料入库*/
 CREATE TABLE [dbo].[RuKu](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[countfile] [varchar](50) NULL,
 	[partsno] [varchar](50) NULL,
 	[qty] [int] NULL,
@@ -54,8 +55,8 @@ CREATE TABLE [dbo].[RuKu](
 	[delearNo] [nvarchar](100) NULL, /*申请单号*/
 )
 
-
 CREATE TABLE [dbo].[ChuKu](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[countfile] [nvarchar](100) NULL,
 	[partsno] [nvarchar](100) NULL,
 	[serial] [nvarchar](100) NULL,
@@ -191,5 +192,7 @@ CREATE TABLE [dbo].[NBShouLiao](
 	[PackDate] [date] NULL,
 	[NewNBSerial] [nvarchar](128) NULL,
 	[ShipDate] [date] NULL,
+	[declearNumber] [nvarchar](128) NULL,
+	[receiveDate] [date] NULL,
 
 )

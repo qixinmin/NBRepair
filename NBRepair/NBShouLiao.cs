@@ -39,59 +39,61 @@ namespace NBRepair
                     if (querySdr.HasRows == true)
                     {
                         cmd.CommandText = "update " + tableName + " set vendor = '" + this.vendor.Text.Trim()
-                                  + "',customer = '" + this.customer.Text.Trim() + " "
-                                  + "', NBID = '" + this.NBID.Text.Trim() + " "
-                                  + "',NBSerial = '" + this.NBSerial.Text.Trim().ToUpper () + " "
+                            + "',customer = '" + this.customer.Text.Trim() + " "
+                            + "', NBID = '" + this.NBID.Text.Trim() + " "
+                            + "',NBSerial = '" + this.NBSerial.Text.Trim().ToUpper() + " "
 
-                                  + "',NewNBSerial='"+"1S"+  this.NBSerial.Text.Trim().Substring(2, 10).ToUpper()+"TR" + this.NBSerial.Text.Trim().Substring (14,6).ToUpper ()+" "
+                            + "',NewNBSerial='" + "1S" + this.NBSerial.Text.Trim().Substring(2, 10).ToUpper() + "TR" + this.NBSerial.Text.Trim().Substring(14, 6).ToUpper() + " "
 
-                                  + "',SKU = '" + this.NBSerial.Text.Trim().Substring (2,10).ToUpper () + " "
-                                  + "',NBSN = '" + this.NBSerial.Text.Trim().Substring (12,8).ToUpper () + " "
-                                  + "',Model = '" + this.Model.Text.Trim().ToUpper () + " "
-                                  + "',UUID = '" + this.UUID.Text.Trim().ToUpper () + " "
-                                  
-                                  + "',AdapterSN = '" + this.AdapterSN.Text.Trim().ToUpper () + " "
-                                  + "',PowerCodeSN = '" + this.PowerCodeSN.Text.Trim().ToUpper () + " "
-                                  + "',FunctionOK = '" + this.FunctionOK.Text.Trim() + " "
-                                  + "',ConfigDesc = '" + this.ConfigDesc.Text.Trim() + " "
-                                  + "',CheckMan = '" + this.CheckMan.Text.Trim() + " "
+                            + "',SKU = '" + this.NBSerial.Text.Trim().Substring(2, 10).ToUpper() + " "
+                            + "',NBSN = '" + this.NBSerial.Text.Trim().Substring(12, 8).ToUpper() + " "
+                            + "',Model = '" + this.Model.Text.Trim().ToUpper() + " "
+                            + "',UUID = '" + this.UUID.Text.Trim().ToUpper() + " "
 
-                                  + "' where NBID = '" + this.NBID.Text.Trim().ToUpper ()
-                                  + "' or NBSerial = '" + this.NBSerial.Text.Trim().ToUpper () + "'";
+                            + "',AdapterSN = '" + this.AdapterSN.Text.Trim().ToUpper() + " "
+                            + "',PowerCodeSN = '" + this.PowerCodeSN.Text.Trim().ToUpper() + " "
+                            + "',FunctionOK = '" + this.FunctionOK.Text.Trim() + " "
+                            + "',ConfigDesc = '" + this.ConfigDesc.Text.Trim() + " "
+                            + "',CheckMan = '" + this.CheckMan.Text.Trim() + " "
+
+                            + "' where NBID = '" + this.NBID.Text.Trim().ToUpper()
+                            + "' or NBSerial = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
+                       
                         querySdr.Close();
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("  Update Save OK");//1S20KNA002CDPF12D33Z
-                          //  1S  20KNA002CD  PF12D33Z
+                        MessageBox.Show("  Update Save OK");
                        
                         this.NBID.Focus();
                     }
                     else
                     {
-                        cmd.CommandText = "INSERT INTO " + tableName + " (vendor,customer,NBID,NBSerial,NewNBSerial,SKU,NBSN,Model,UUID,AdapterSN,PowerCodeSN,FunctionOK,ConfigDesc,CheckMan, Status, CheckDate)  VALUES('" +
-                        this.vendor.Text.Trim() + "','" +
-                        this.customer.Text.Trim() + "','" +
-                        this.NBID.Text.Trim() + "','" +
-                        this.NBSerial.Text.Trim().ToUpper () + "','" +
+                        cmd.CommandText = "INSERT INTO " + tableName + " (vendor,customer,NBID,NBSerial,NewNBSerial,SKU,NBSN,Model,UUID,AdapterSN,PowerCodeSN,FunctionOK,ConfigDesc,CheckMan, Status, CheckDate,declearNumber,receiveDate)  VALUES('" +
+                            this.vendor.Text.Trim() + "','" +
+                            this.customer.Text.Trim() + "','" +
+                            this.NBID.Text.Trim() + "','" +
+                            this.NBSerial.Text.Trim().ToUpper() + "','" +
 
-                        "1S"+  this.NBSerial.Text.Trim().Substring(2, 10).ToUpper()+"TR" + this.NBSerial.Text.Trim().Substring (14,6).ToUpper ()+ "','" +
+                            "1S" + this.NBSerial.Text.Trim().Substring(2, 10).ToUpper() + "TR" + this.NBSerial.Text.Trim().Substring(14, 6).ToUpper() + "','" +
 
-                        this.NBSerial.Text.Trim().Substring (2,10).ToUpper () + "','" +
-                        this.NBSerial.Text.Trim().Substring (12,8).ToUpper () + "','" +
-                        this.Model.Text.Trim().ToUpper () + "','" +
-                        this.UUID.Text.Trim() + "','" +
-                        
-                        this.AdapterSN.Text.Trim() + "','" +
-                        this.PowerCodeSN.Text.Trim() + "','" +
-                        this.FunctionOK.Text.Trim() + "','" +
-                        this.ConfigDesc.Text.Trim() + "','" +
-                        this.CheckMan.Text.Trim() + "','" +
-                        "待修" + "','" +
-                         System.DateTime.Today.ToShortDateString () +
-                         "')";
+                            this.NBSerial.Text.Trim().Substring(2, 10).ToUpper() + "','" +
+                            this.NBSerial.Text.Trim().Substring(12, 8).ToUpper() + "','" +
+                            this.Model.Text.Trim().ToUpper() + "','" +
+                            this.UUID.Text.Trim() + "','" +
+
+                            this.AdapterSN.Text.Trim() + "','" +
+                            this.PowerCodeSN.Text.Trim() + "','" +
+                            this.FunctionOK.Text.Trim() + "','" +
+                            this.ConfigDesc.Text.Trim() + "','" +
+                            this.CheckMan.Text.Trim() + "','" +
+                            "待修" + "','" +
+                             System.DateTime.Today.ToShortDateString() +
+                             this.declearNumbeTextBox.Text.Trim() + "','" +
+                             System.DateTime.Today.ToShortDateString() +
+                             "')";
+
                         querySdr.Close();
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("New Save OK");
-
                        
                         this.NBID.Focus();
                     }
@@ -129,9 +131,6 @@ namespace NBRepair
                          "')";
                         querySdr.Close();
                         cmd.ExecuteNonQuery();
-                     //   MessageBox.Show("New  INNBRUKU   Save OK");
-
-                      
                         this.NBID.Focus();
                     }
 
@@ -151,8 +150,6 @@ namespace NBRepair
                                   + "' or NBSerial = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
                         querySdr.Close();
                         cmd.ExecuteNonQuery();
-                     //   MessageBox.Show("  Update   chu Save OK");//1S20KNA002CDPF12D33Z
-                        //  1S  20KNA002CD  PF12D33Z
 
                         this.NBID.Focus();
                     }
@@ -169,8 +166,6 @@ namespace NBRepair
                          "')";
                         querySdr.Close();
                         cmd.ExecuteNonQuery();
-                      //   MessageBox.Show("New  chu  Save OK");
-
 
                         this.NBID.Focus();
                     }

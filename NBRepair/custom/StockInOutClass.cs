@@ -23,10 +23,10 @@ namespace SaledServices.CustomsContentClass
 
     public class TrackNoCustomRelation
     {
-        public string trackno;
-        public string custom_materialNo;
+        public string trackno;//整机序号
+        public string custom_materialNo;//model机型
         public string orderno;
-        public string declare_unit;
+        public string declare_unit;//默认为台
         public string declare_number;
         public string custom_request_number;
         public string date;
