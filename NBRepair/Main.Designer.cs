@@ -44,6 +44,7 @@
             this.实盘库存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.出入库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.上传出货海关信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.不良品出库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +61,8 @@
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
             this.toolStripMenuItem3,
-            this.海关ToolStripMenuItem});
+            this.海关ToolStripMenuItem,
+            this.不良品出库ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(10, 4, 0, 4);
@@ -188,6 +190,14 @@
             this.上传出货海关信息ToolStripMenuItem.Text = "上传出货海关信息";
             this.上传出货海关信息ToolStripMenuItem.Click += new System.EventHandler(this.上传出货海关信息ToolStripMenuItem_Click);
             // 
+            // 不良品出库ToolStripMenuItem
+            // 
+            this.不良品出库ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
+            this.不良品出库ToolStripMenuItem.Name = "不良品出库ToolStripMenuItem";
+            this.不良品出库ToolStripMenuItem.Size = new System.Drawing.Size(102, 25);
+            this.不良品出库ToolStripMenuItem.Text = "不良品出库";
+            this.不良品出库ToolStripMenuItem.Click += new System.EventHandler(this.不良品出库ToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -197,7 +207,7 @@
             this.Font = new System.Drawing.Font("SimSun", 15F);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Main";
             this.Text = "机器维修系统";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
@@ -227,6 +237,7 @@
         private System.Windows.Forms.ToolStripMenuItem 实盘库存ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 出入库ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 上传出货海关信息ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 不良品出库ToolStripMenuItem;
     }
 }
 

@@ -268,7 +268,7 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString();//因为报关原因，需要改成71料号（联想料号）
+                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString();
                         MaterialCustomRelationTemp.num = querySdr[2].ToString();
                         MaterialCustomRelationTemp.date = querySdr[3].ToString();
                         MaterialCustomRelationTemp.declare_unit = "个";
@@ -286,13 +286,97 @@ namespace SaledServices.CustomsExport
                             init1.io_no = materialTemp.id;
                             init1.goods_nature = "I";
                             init1.io_date = Untils.getCustomDate(materialTemp.date);
-                            init1.cop_g_no = materialTemp.mpn;//因为报关原因，需要改成71料号（联想料号）->上面已经修改
+                            init1.cop_g_no = materialTemp.mpn;
                             init1.qty = "-" + materialTemp.num;
                             init1.unit = Untils.getCustomCode(materialTemp.declare_unit);
                             init1.type = "E0003";
                             init1.chk_code = "";
                             init1.entry_id = "";
                             init1.gatejob_no = "";
+                            init1.whs_code = "";
+                            init1.location_code = "";
+                            init1.note = "";
+
+                            storeTransList.Add(init1);
+                        }
+                    }
+
+                    //6 不良品材料入库
+                    MaterialCustomRelationList.Clear();
+                    cmd.CommandText = "select Id,materialNo,number,input_date from ChuKu where input_date between '" + startTime + "' and '" + endTime + "'";
+                    querySdr = cmd.ExecuteReader();
+                    while (querySdr.Read())
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString();
+                        MaterialCustomRelationTemp.num = querySdr[2].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[3].ToString();
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+                    querySdr.Close();
+
+                    if (MaterialCustomRelationList.Count > 0)
+                    {
+                        //信息完全,生成信息
+                        foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
+                        {
+                            StoreTrans init1 = new StoreTrans();
+                            init1.ems_no = ems_no;
+                            init1.io_no = materialTemp.id;
+                            init1.goods_nature = "I";
+                            init1.io_date = Untils.getCustomDate(materialTemp.date);
+                            init1.cop_g_no = materialTemp.mpn;
+                            init1.qty = materialTemp.num;
+                            init1.unit = Untils.getCustomCode(materialTemp.declare_unit);
+                            init1.type = "I0003";
+                            init1.chk_code = "";
+                            init1.entry_id = "";
+                            init1.gatejob_no = "";
+                            init1.whs_code = "";
+                            init1.location_code = "";
+                            init1.note = "";
+
+                            storeTransList.Add(init1);
+                        }
+                    }
+
+                    //6 不良品材料报关出库
+                    MaterialCustomRelationList.Clear();
+                    cmd.CommandText = "select Id,mpn,in_number,input_date,declare_unit,declare_number,custom_request_number from ng_out_house_table where input_date between '" + startTime + "' and '" + endTime + "'";
+                    querySdr = cmd.ExecuteReader();
+                    while (querySdr.Read())
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString();
+                        MaterialCustomRelationTemp.num = querySdr[2].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[3].ToString();
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.declare_number = querySdr[5].ToString();
+                        MaterialCustomRelationTemp.custom_request_number = querySdr[6].ToString();
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+                    querySdr.Close();
+
+                    if (MaterialCustomRelationList.Count > 0)
+                    {
+                        //信息完全,生成信息
+                        foreach (MaterialCustomRelation materialTemp in MaterialCustomRelationList)
+                        {
+                            StoreTrans init1 = new StoreTrans();
+                            init1.ems_no = ems_no;
+                            init1.io_no = materialTemp.id;
+                            init1.goods_nature = "I";
+                            init1.io_date = Untils.getCustomDate(materialTemp.date);
+                            init1.cop_g_no = materialTemp.mpn;
+                            init1.qty = "-"+materialTemp.num;
+                            init1.unit = Untils.getCustomCode(materialTemp.declare_unit);
+                            init1.type = "E0002";
+                            init1.chk_code = "";
+                            init1.entry_id = materialTemp.declare_number;
+                            init1.gatejob_no = materialTemp.custom_request_number;
                             init1.whs_code = "";
                             init1.location_code = "";
                             init1.note = "";

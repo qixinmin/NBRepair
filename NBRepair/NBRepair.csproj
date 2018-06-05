@@ -103,6 +103,12 @@
     <Compile Include="custom\WorkListBodyClass.cs" />
     <Compile Include="custom\WorkListHeadClass.cs" />
     <Compile Include="EXCELIO.cs" />
+    <Compile Include="FaultMaterialOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FaultMaterialOutForm.designer.cs">
+      <DependentUpon>FaultMaterialOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LabelPrint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="custom\StockInOutForm.resx">
       <DependentUpon>StockInOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FaultMaterialOutForm.resx">
+      <DependentUpon>FaultMaterialOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LabelPrint.resx">
       <DependentUpon>LabelPrint.cs</DependentUpon>

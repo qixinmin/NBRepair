@@ -65,3 +65,4 @@ D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.GenerateResour
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.exe
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.pdb
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.ReturnCustomInfoImportForm.resources
+D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.FaultMaterialOutForm.resources

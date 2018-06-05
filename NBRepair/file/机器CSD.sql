@@ -35,6 +35,17 @@ number NVARCHAR(128), /*入库数量*/
 input_date date,/*入库时间*/
 )
 
+/*不良品出库记录*/
+CREATE TABLE ng_out_house_table(
+Id INT PRIMARY KEY IDENTITY, 
+mpn NVARCHAR(128) NOT NULL,/*料号*/
+in_number NVARCHAR(128), /*入库数量*/
+input_date date, /*输入日期*/
+declare_unit NVARCHAR(128), /*申报单位,需要转换*/
+declare_number NVARCHAR(128), /*报关单号*/
+custom_request_number NVARCHAR(128), /*申请单号*/
+)
+
 /*材料库房*/
 create table materialhouse
 (
@@ -144,8 +155,7 @@ CREATE TABLE [dbo].[RatingLabel](
 	[LCD] [nvarchar](50) NULL,
 	[WEIGHT] [nvarchar](50) NULL,
 	[CCLABEL] [nvarchar](50) NULL
-) 
-
+)
 
 CREATE TABLE [dbo].[NBShouLiao](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -194,5 +204,4 @@ CREATE TABLE [dbo].[NBShouLiao](
 	[ShipDate] [date] NULL,
 	[declearNumber] [nvarchar](128) NULL,
 	[receiveDate] [date] NULL,
-
 )

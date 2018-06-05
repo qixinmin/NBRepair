@@ -268,5 +268,19 @@ namespace NBRepair
             stockInOutform.Show();
         }
 
+        private FaultMaterialOutForm faultOutForm;
+        private void 不良品出库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            if (faultOutForm == null || faultOutForm.IsDisposed)
+            {
+                faultOutForm = new FaultMaterialOutForm();
+                faultOutForm.MdiParent = this;
+            }
+
+            //faultOutForm.WindowState = FormWindowState.Maximized;
+            faultOutForm.BringToFront();
+            faultOutForm.Show();
+        }
+
     }
 }
