@@ -219,5 +219,25 @@ namespace NBRepair
             }
 
         }
+
+        private void StockOut_Load(object sender, EventArgs e)
+        {
+            tableLayoutPanel1.GetType().
+               GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+               SetValue(tableLayoutPanel1, true, null);
+            tableLayoutPanel2.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel2, true, null);
+            tableLayoutPanel3.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel3, true, null);
+            tableLayoutPanel4.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel4, true, null);
+            tableLayoutPanel5.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel5, true, null);
+            
+        }
     }
 }

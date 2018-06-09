@@ -465,7 +465,13 @@ namespace NBRepair
         {
             CodeSoft.initCodesoftModel(CodeSoft.CartonLabelModel);//CodeSoft.CartonLabelModel );  
             this.NBSerial.Focus();
-           
+            tableLayoutPanel1.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel1, true, null);
+            tableLayoutPanel2.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel2, true, null);
+            
         }
 
         private void NBPack_FormClosing(object sender, FormClosingEventArgs e)

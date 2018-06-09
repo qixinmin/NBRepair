@@ -204,5 +204,15 @@ namespace NBRepair
 
         }
 
+        private void RatingLabel_Load(object sender, EventArgs e)
+        {
+            tableLayoutPanel1.GetType().
+               GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+               SetValue(tableLayoutPanel1, true, null);
+            tableLayoutPanel2.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel2, true, null);
+        }
+
     }
 }

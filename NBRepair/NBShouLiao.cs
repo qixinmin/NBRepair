@@ -502,6 +502,14 @@ namespace NBRepair
         {
             this.vendor.Text = "联宝";
             this.customer.Text = "联想";
+
+            tableLayoutPanel1.GetType().
+               GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+               SetValue(tableLayoutPanel1, true, null);
+            tableLayoutPanel2.GetType().
+                GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
+                SetValue(tableLayoutPanel2, true, null);
+            
         }
        
     }
