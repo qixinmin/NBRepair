@@ -13,13 +13,9 @@ namespace NBRepair
 {
     public partial class NBPack : Form
     {
-       
-
         public NBPack()
-        {
-           
+        {           
             InitializeComponent();
-
         }
 
         private void NBSerial_KeyPress(object sender, KeyPressEventArgs e)
@@ -30,7 +26,6 @@ namespace NBRepair
                 {
                     this.NewAdapterSN.Focus();
                     // TPORT.bat  UUID MAC.bat  
-
                 }
                 else
                 {
@@ -38,6 +33,7 @@ namespace NBRepair
                 }
             }
         }
+
         public string GetPartsNo(string partsserial, int l)
         {
             string partsno = "";
@@ -50,16 +46,15 @@ namespace NBRepair
                 else if (partsserial.Substring(0, 3).ToUpper() == "11S")
                 {
                     partsno = partsserial.ToUpper().Substring(3, l);
-
                 }
                 else
                 {
-
                 }
             }
 
             return partsno;
         }
+
         private void NewAdapterSN_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
@@ -83,6 +78,7 @@ namespace NBRepair
                 }
             }
         }
+
         public bool CheckKeyPartsInBom(string MTM, string item, string partsno1, string partsno2)
         {
             bool ok = false;
@@ -107,7 +103,6 @@ namespace NBRepair
                     cmd.Dispose();
                 }
                 conn.Close();
-
             }
             catch (Exception ex)
             {
@@ -115,17 +110,14 @@ namespace NBRepair
             }
 
             return ok;
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             if (this.NewAdapterSN.Text != "" && this.NewPowerCodeSN.Text != "" && this.NBSerial.Text != "")
             {
                 SqlConnection conn = new SqlConnection(Conlist.ConStr);
                 conn.Open();
-
 
                 SqlConnection conn1 = new SqlConnection(Conlist.ConStr);
                 conn1.Open();
@@ -277,8 +269,7 @@ namespace NBRepair
                                       + "' where NBID = '" + NBID
                                       + "' or NBSerial = '" + NBSerial + "'";
                             querySdr.Close();
-                            cmd.ExecuteNonQuery();
-                            
+                            cmd.ExecuteNonQuery();                            
                         }
                         else
                         {
@@ -294,8 +285,8 @@ namespace NBRepair
                             //querySdr.Close();
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("New  out    NBRUKU   Save OK");
-                        }                        
-                        //
+                        }
+
                         //update 料号数量
                         cmd.CommandText = "select number from NBHouse where model='" + Model + "'";
                         querySdr = cmd.ExecuteReader();
@@ -428,6 +419,8 @@ namespace NBRepair
                         cmd.Dispose();
                     }
                 }
+
+
                 conn.Close();
 
                 queryLastesttoday();
@@ -437,6 +430,7 @@ namespace NBRepair
                 MessageBox.Show("资料不全");
             }
         }
+
         private void queryLastesttoday()
         {
             try
@@ -473,13 +467,11 @@ namespace NBRepair
                 SetValue(tableLayoutPanel1, true, null);
             tableLayoutPanel2.GetType().
                 GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
-                SetValue(tableLayoutPanel2, true, null);
-            
+                SetValue(tableLayoutPanel2, true, null);            
         }
 
         private void NBPack_FormClosing(object sender, FormClosingEventArgs e)
         {
-
         }
 
         private void NewPowerCodeSN_KeyPress(object sender, KeyPressEventArgs e)
@@ -491,12 +483,11 @@ namespace NBRepair
                     string partsno = GetPartsNo(this.NewPowerCodeSN.Text.ToUpper(), 7);
                     string topicitem = "PWR CORD";
                     if (CheckKeyPartsInBom(this.NBSerial.Text.Trim().Substring(2, 10).ToUpper(), topicitem, partsno, partsno) == true)// PWR CORD
-                    {
-                        
+                    {                        
                     }
                     else
                     {
-                        MessageBox.Show("电源   线   料号不对！"); this.NewPowerCodeSN.Focus(); this.NewPowerCodeSN.Text = "";
+                        MessageBox.Show("电源 线 料号不对！"); this.NewPowerCodeSN.Focus(); this.NewPowerCodeSN.Text = "";
                     }
                 }
                 else

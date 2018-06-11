@@ -94,6 +94,8 @@ namespace NBRepair
                                 // MessageBox.Show("New  chu  Save OK");
                             }
                             cmd.Dispose();
+
+                            
                         }
                     }
                     conn.Close();

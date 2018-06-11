@@ -41,52 +41,51 @@ namespace NBRepair
                         nbid = querySdr["NBID"].ToString();
                     }
                     querySdr.Close();
+
                     cmd.CommandText = "update " + tableName + " set BatterySN = '" + this.BatterySN.Text.Trim().ToUpper()
 
-                              + "',BatterySN1 = '" + this.frontbattery.Text.Trim().ToUpper() + " "
+                            + "',BatterySN1 = '" + this.frontbattery.Text.Trim().ToUpper() + " "
 
-                              + "',KBSN = '" + this.KBSN.Text.Trim().ToUpper() + " "
-                              + "',OLDKBSN = '" + this.OLDKBSN.Text.Trim().ToUpper() + " "
-                              + "',MBSN = '" + this.MBSN.Text.Trim().ToUpper() + " "
+                            + "',KBSN = '" + this.KBSN.Text.Trim().ToUpper() + " "
+                            + "',OLDKBSN = '" + this.OLDKBSN.Text.Trim().ToUpper() + " "
+                            + "',MBSN = '" + this.MBSN.Text.Trim().ToUpper() + " "
                              
-                              + "',Memory1SN = '" + this.Memory1SN.Text.Trim().ToUpper() + " "
-                              + "',Memory2SN = '" + this.Memory2SN.Text.Trim().ToUpper() + " "
-                              + "',HDDSN = '" + this.HDDSN.Text.Trim().ToUpper() + " "
-                              + "',SSDSN = '" + this.SSDSN.Text.Trim().ToUpper() + " "
-                              + "',WLANSN = '" + this.WLANSN.Text.Trim().ToUpper() + " "
+                            + "',Memory1SN = '" + this.Memory1SN.Text.Trim().ToUpper() + " "
+                            + "',Memory2SN = '" + this.Memory2SN.Text.Trim().ToUpper() + " "
+                            + "',HDDSN = '" + this.HDDSN.Text.Trim().ToUpper() + " "
+                            + "',SSDSN = '" + this.SSDSN.Text.Trim().ToUpper() + " "
+                            + "',WLANSN = '" + this.WLANSN.Text.Trim().ToUpper() + " "
                              
-                              + "',COVERSN = '" + this.COVERSN.Text.Trim().ToUpper() + " "
+                            + "',COVERSN = '" + this.COVERSN.Text.Trim().ToUpper() + " "
 
-                                + "',OLDCOVERSN = '" + this.OLDCOVERSN.Text.Trim().ToUpper() + " "
-                              + "',BRZELSN = '" + this.BRZELSN.Text.Trim().ToUpper() + " "
+                            + "',OLDCOVERSN = '" + this.OLDCOVERSN.Text.Trim().ToUpper() + " "
+                            + "',BRZELSN = '" + this.BRZELSN.Text.Trim().ToUpper() + " "
 
-                                + "',OLDBRZELSN = '" + this.OLDBRZELSN.Text.Trim().ToUpper() + " "
+                            + "',OLDBRZELSN = '" + this.OLDBRZELSN.Text.Trim().ToUpper() + " "
 
-                                  + "',LOWSN = '" + this.LOWSN.Text.Trim().ToUpper() + " "
-                                    + "',OLDLOWSN = '" + this.OLDLOWSN.Text.Trim().ToUpper() + " "
-                              + "',UPSN = '" + this.UPSN.Text.Trim().ToUpper() + " "
-                              
+                            + "',LOWSN = '" + this.LOWSN.Text.Trim().ToUpper() + " "
+                            + "',OLDLOWSN = '" + this.OLDLOWSN.Text.Trim().ToUpper() + " "
+                            + "',UPSN = '" + this.UPSN.Text.Trim().ToUpper() + " "
 
-                              + "',OLDUPSN = '" + this.OLDUPSN.Text.Trim().ToUpper() + " "
+                            + "',OLDUPSN = '" + this.OLDUPSN.Text.Trim().ToUpper() + " "
 
-                               + "',KBUPSN = '" + this.KBUPSN.Text.Trim().ToUpper() + " "
+                            + "',KBUPSN = '" + this.KBUPSN.Text.Trim().ToUpper() + " "
 
-                                 + "',OLDKBUPSN = '" + this.OLDKBUPSN.Text.Trim().ToUpper() + " "
+                            + "',OLDKBUPSN = '" + this.OLDKBUPSN.Text.Trim().ToUpper() + " "
 
-                                    + "',RADAPTER = '" + this.RADAPTER.Text.Trim().ToUpper() + " "
-                                       + "',OLDRADAPTER = '" + this.OLDRADAPTER.Text.Trim().ToUpper() + " "
+                            + "',RADAPTER = '" + this.RADAPTER.Text.Trim().ToUpper() + " "
+                            + "',OLDRADAPTER = '" + this.OLDRADAPTER.Text.Trim().ToUpper() + " "
 
+                            + "',OTHERSN = '" + this.OTHERSN.Text.Trim().ToUpper() + " "
 
-                              + "',OTHERSN = '" + this.OTHERSN.Text.Trim().ToUpper() + " "
+                            + "',OLDOTHERSN = '" + this.OLDOTHERSN.Text.Trim().ToUpper() + " "
+                            + "',RepairDesc = '" + this.RepairDesc.Text.Trim().ToUpper() + " "
+                            + "',RepairMan = '" + this.RepairMan.Text.Trim().ToUpper() + " "
+                            + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
+                            + "',Status = '待测 "
 
-                                 + "',OLDOTHERSN = '" + this.OLDOTHERSN.Text.Trim().ToUpper() + " "
-                              + "',RepairDesc = '" + this.RepairDesc.Text.Trim().ToUpper() + " "
-                              + "',RepairMan = '" + this.RepairMan.Text.Trim().ToUpper() + " "
-                              + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
-                              + "',Status = '待测 "
-
-                              + "' where NBSerial = '" + this.NBSerial.Text.Trim().ToUpper()
-                              + "' or NBID = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
+                            + "' where NBSerial = '" + this.NBSerial.Text.Trim().ToUpper()
+                            + "' or NBID = '" + this.NBSerial.Text.Trim().ToUpper() + "'";
 
 
                     cmd.ExecuteNonQuery();
@@ -123,7 +122,6 @@ namespace NBRepair
                                         }
                                         querySdr1.Close();
                                         cmd1.Dispose();
-
                                     }
                                     else
                                     {
@@ -139,8 +137,6 @@ namespace NBRepair
                                        this.RepairMan.Text + "','" +
                                        System.DateTime.Today.ToShortDateString() +
                                     "')";
-
-
 
                                     cmd.ExecuteNonQuery();
 
@@ -279,6 +275,7 @@ namespace NBRepair
                 MessageBox.Show(ex.ToString());
             }
         }
+
         private void GetKeyPartsBOM(  string partsno)
         {
             try
@@ -306,7 +303,6 @@ namespace NBRepair
             }
         }
 
-
         public void Clear()
         {
             this.NBSerial.Text = ""; this.BatterySN.Text = ""; this.KBSN.Text = ""; this.MBSN.Text = ""; this.Memory1SN.Text = ""; this.Memory2SN.Text = ""; this.HDDSN.Text = ""; this.SSDSN.Text = "";
@@ -326,15 +322,14 @@ namespace NBRepair
                 {
                     LoadData();
                     this.MBSN.Focus();
-
                 }
                 else
                 {
                     this.NBSerial.Focus();
                 }
-
             }
         }
+
         public bool CheckKeyPartsInBom(string MTM, string item, string partsno1, string partsno2)
         {
             bool ok = false;
@@ -369,7 +364,6 @@ namespace NBRepair
                     cmd.Dispose();
                 }
                 conn.Close();
-
             }
             catch (Exception ex)
             {
@@ -377,9 +371,7 @@ namespace NBRepair
             }
 
             return ok;
-
         }
-
 
         public bool KeyPartsInBom(string MTM)
         {
@@ -399,10 +391,8 @@ namespace NBRepair
 
                     SqlDataAdapter sda = new SqlDataAdapter();
                     sda.SelectCommand = cmd;
-
                     
                     DataSet ds = new DataSet();
-
                    
                     sda.Fill(ds, tableName);
                     dataGridView2.DataSource = ds.Tables[0];
@@ -411,7 +401,6 @@ namespace NBRepair
                     cmd.Dispose();
                 }
                 conn.Close();
-
             }
             catch (Exception ex)
             {
@@ -419,8 +408,8 @@ namespace NBRepair
             }
 
             return ok;
-
         }
+
         private void LoadData()
         {
             if (this.NBSerial.Text.Trim() != "")
@@ -469,13 +458,10 @@ namespace NBRepair
                         this.OLDUPSN.Text = querySdr["OLDUPSN"].ToString().Trim();
                         this.OLDLOWSN.Text = querySdr["OLDLOWSN"].ToString().Trim();
 
-
-
                         this.RADAPTER.Text = querySdr["RADAPTER"].ToString().Trim();
                         this.OLDRADAPTER.Text = querySdr["OLDRADAPTER"].ToString().Trim();
                         this.KBUPSN.Text = querySdr["KBUPSN"].ToString().Trim();
                         this.OLDKBUPSN.Text = querySdr["OLDKBUPSN"].ToString().Trim();
-
 
                         this.OTHERSN.Text = querySdr["OTHERSN"].ToString().Trim();
                         this.RepairDesc.Text = querySdr["RepairDesc"].ToString().Trim();
@@ -490,11 +476,10 @@ namespace NBRepair
                 }
                 conn.Close();
 
-                queryLastesttoday();
-               
+                queryLastesttoday();               
             }
-
         }
+
         public string GetPartsNo(string partsserial,int l)
         {
             string partsno = "";
@@ -514,18 +499,10 @@ namespace NBRepair
                     partsno = partsserial.ToUpper().Substring(0, 11);
 
                 }
-
-
-
-
             }
 
             return partsno;
-        }
-       
-
-       
-        
+        }        
 
         private void MBSN_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -540,11 +517,8 @@ namespace NBRepair
                 {
                     this.Memory1SN.Focus();
                 }
-
             }
-        }
-
-      
+        }      
 
         private void Memory1SN_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -572,7 +546,6 @@ namespace NBRepair
                         else
                         {
                             this.Memory2SN.Focus();
-
                         }
                     }
                     else
@@ -583,7 +556,6 @@ namespace NBRepair
                 else
                 {
                     this.Memory1SN.Focus();
-
                 }
             }
         }
@@ -626,7 +598,6 @@ namespace NBRepair
                 {
                     this.Memory2SN.Focus();
                 }
-
             }
         }
 
@@ -667,7 +638,6 @@ namespace NBRepair
                 else
                 {
                     this.HDDSN.Focus();
-
                 }
             }
         }
@@ -710,11 +680,8 @@ namespace NBRepair
                     this.SSDSN.Focus();
 
                 }
-
             }
-        }
-
-       
+        }       
 
         private void WLANSN_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -749,11 +716,8 @@ namespace NBRepair
             else
             {
                this.WLANSN.Focus();
-            }
-        
-    }
-
-       
+            }        
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
