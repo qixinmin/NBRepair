@@ -23,6 +23,8 @@ namespace NBRepair
             {
                 SqlConnection conn = new SqlConnection(Conlist.ConStr);
                 conn.Open();
+                SqlConnection conn1 = new SqlConnection(Conlist.ConStr);
+                conn1.Open();
                 if (conn.State == ConnectionState.Open)
                 {
                     SqlCommand cmd = new SqlCommand();
@@ -44,23 +46,40 @@ namespace NBRepair
                               + "',BatterySN1 = '" + this.frontbattery.Text.Trim().ToUpper() + " "
 
                               + "',KBSN = '" + this.KBSN.Text.Trim().ToUpper() + " "
-                              + "',LCDSN = '" + this.LCDSN.Text.Trim().ToUpper() + " "
+                              + "',OLDKBSN = '" + this.OLDKBSN.Text.Trim().ToUpper() + " "
                               + "',MBSN = '" + this.MBSN.Text.Trim().ToUpper() + " "
-                              + "',MBPN = '" + this.MBPN.Text.Trim().ToUpper() + " "
-
-                              + "',MBMAC = '" + this.MBMAC.Text.Trim().ToUpper() + " "
+                             
                               + "',Memory1SN = '" + this.Memory1SN.Text.Trim().ToUpper() + " "
                               + "',Memory2SN = '" + this.Memory2SN.Text.Trim().ToUpper() + " "
                               + "',HDDSN = '" + this.HDDSN.Text.Trim().ToUpper() + " "
                               + "',SSDSN = '" + this.SSDSN.Text.Trim().ToUpper() + " "
                               + "',WLANSN = '" + this.WLANSN.Text.Trim().ToUpper() + " "
-                              + "',WLANMAC = '" + this.WLANMAC.Text.Trim().ToUpper() + " "
-                              + "',FANSN = '" + this.FANSN.Text.Trim().ToUpper() + " "
+                             
                               + "',COVERSN = '" + this.COVERSN.Text.Trim().ToUpper() + " "
+
+                                + "',OLDCOVERSN = '" + this.OLDCOVERSN.Text.Trim().ToUpper() + " "
                               + "',BRZELSN = '" + this.BRZELSN.Text.Trim().ToUpper() + " "
+
+                                + "',OLDBRZELSN = '" + this.OLDBRZELSN.Text.Trim().ToUpper() + " "
+
+                                  + "',LOWSN = '" + this.LOWSN.Text.Trim().ToUpper() + " "
+                                    + "',OLDLOWSN = '" + this.OLDLOWSN.Text.Trim().ToUpper() + " "
                               + "',UPSN = '" + this.UPSN.Text.Trim().ToUpper() + " "
-                              + "',LOWSN = '" + this.LOWSN.Text.Trim().ToUpper() + " "
+                              
+
+                              + "',OLDUPSN = '" + this.OLDUPSN.Text.Trim().ToUpper() + " "
+
+                               + "',KBUPSN = '" + this.KBUPSN.Text.Trim().ToUpper() + " "
+
+                                 + "',OLDKBUPSN = '" + this.OLDKBUPSN.Text.Trim().ToUpper() + " "
+
+                                    + "',RADAPTER = '" + this.RADAPTER.Text.Trim().ToUpper() + " "
+                                       + "',OLDRADAPTER = '" + this.OLDRADAPTER.Text.Trim().ToUpper() + " "
+
+
                               + "',OTHERSN = '" + this.OTHERSN.Text.Trim().ToUpper() + " "
+
+                                 + "',OLDOTHERSN = '" + this.OLDOTHERSN.Text.Trim().ToUpper() + " "
                               + "',RepairDesc = '" + this.RepairDesc.Text.Trim().ToUpper() + " "
                               + "',RepairMan = '" + this.RepairMan.Text.Trim().ToUpper() + " "
                               + "',RepairDate ='" + System.DateTime.Today.ToString("yyyy-MM-dd") + " "
@@ -79,32 +98,60 @@ namespace NBRepair
                         tableName = "ChuKu";
                         cmd.CommandText = "delete   from " + tableName + " where  countfile = '" + nbid + "' ";
                         cmd.ExecuteNonQuery();
-                        string[] str = { this.COVERSN.Text.ToUpper(), this.BRZELSN.Text.ToUpper(), this.UPSN.Text.ToUpper(), this.LOWSN.Text.ToUpper(), this.OTHERSN.Text.ToUpper() };
+                        string[] str = { this.COVERSN.Text.ToUpper(), this.BRZELSN.Text.ToUpper(), this.UPSN.Text.ToUpper(), this.LOWSN.Text.ToUpper(), this.KBSN.Text.ToUpper(), this.KBUPSN.Text.ToUpper(), this.RADAPTER.Text.ToUpper(), this.BatterySN.Text.ToUpper(), this.frontbattery.Text.ToUpper(), this.OTHERSN.Text.ToUpper() };//BatterySN
                         for (int i = 0; i < str.Length; i = i + 1)
                         {
                             if (str[i] != "" && str[i].Length >= 11)
                             {
                                 if (str[i].Length > 11)
                                 {
+                                    string partsno = "";
+                                    if (i == 6 || i == 7 || i == 8)
+                                    {
+                                        SqlCommand cmd1 = new SqlCommand();
+                                        cmd1.Connection = conn1;
+                                        cmd1.CommandType = CommandType.Text;
+                                        string tableName1 = "BOMCompare";
+
+                                         string  lnvpn = str[i].Substring(2, 10);
+                                         string mtm = label24.Text;
+                                         cmd1.CommandText = "select  SKU_LNO,LCFC_PN,LNV_PN   from " + tableName1 + " where SKU_LNO = '" + mtm + "'  and LNV_PN = '" + lnvpn + "'   ";
+                                        SqlDataReader querySdr1 = cmd1.ExecuteReader();
+                                        while (querySdr1.Read())
+                                        {
+                                            partsno = querySdr1["LCFC_PN"].ToString().Trim() ;
+                                        }
+                                        querySdr1.Close();
+                                        cmd1.Dispose();
+
+                                    }
+                                    else
+                                    {
+                                        partsno = str[i].Substring(0, 11);
+                                    }
+
                                     cmd.CommandText = "INSERT INTO " + tableName + " (countfile,partsno,serial,qty,price,keyinman,chukudate)  VALUES('" +
-                                        nbid + "','" +
-                                        str[i].Substring(0, 11) + "','" +
-                                        str[i] + "','" +
-                                        1 + "','" +
-                                        0.00 + "','" +
-                                        this.RepairMan.Text + "','" +
-                                        System.DateTime.Today.ToShortDateString() +
-                                     "')";
+                                       nbid + "','" +
+                                      partsno + "','" +
+                                       str[i] + "','" +
+                                       1 + "','" +
+                                       0.00 + "','" +
+                                       this.RepairMan.Text + "','" +
+                                       System.DateTime.Today.ToShortDateString() +
+                                    "')";
+
+
+
                                     cmd.ExecuteNonQuery();
 
                                     //更新料号数量
-                                    string partsno = str[i].Substring(0, 11);
+                                    //string partsno = str[i].Substring(0, 11);
                                     cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
                                     querySdr = cmd.ExecuteReader();
                                     string left_number = "";
                                     while (querySdr.Read())
                                     {
-                                        left_number = querySdr[1].ToString();
+                                        left_number = querySdr[0].ToString();
                                         break;
                                     }
                                     querySdr.Close();
@@ -128,7 +175,7 @@ namespace NBRepair
                                             return;
                                         }
 
-                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + "' where materialNo='" + partsno + "'";
                                         cmd.ExecuteNonQuery();
                                     }
                                     catch (Exception ex)
@@ -152,7 +199,7 @@ namespace NBRepair
                                     left_number = "";
                                     while (querySdr.Read())
                                     {
-                                        left_number = querySdr[1].ToString();
+                                        left_number = querySdr[0].ToString();
                                         exist = true;
                                         break;
                                     }
@@ -170,7 +217,7 @@ namespace NBRepair
 
                                         if (exist)
                                         {
-                                            cmd.CommandText = "update materialNgHouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                            cmd.CommandText = "update materialNgHouse set number = '" + thistotal + "' where materialNo='" + partsno + "'";
                                         }
                                         else
                                         {
@@ -199,7 +246,7 @@ namespace NBRepair
                     MessageBox.Show("  Update Save OK");
                 }
 
-                conn.Close();
+                conn.Close(); conn1.Close();
 
                 queryLastesttoday();
                 Clear();
@@ -214,7 +261,7 @@ namespace NBRepair
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
                 string tableName = "NBShouLiao";
-                cmd.CommandText = "select NBSerial, Model ,BatterySN, KBSN ,MBSN, Memory1SN ,Memory2SN,HDDSN,SSDSN,WLANSN,FANSN,COVERSN,BRZELSN,UPSN,LOWSN,OTHERSN,RepairDesc,Status from " + tableName + " where RepairDate = '" + System.DateTime.Today.ToString("yyyy-MM-dd") + "'";
+                cmd.CommandText = "select NBSerial, Model ,BatterySN, KBSN ,MBSN, Memory1SN ,Memory2SN,HDDSN,SSDSN,WLANSN,COVERSN,BRZELSN,UPSN,LOWSN,OTHERSN,RepairDesc,Status from " + tableName + " where RepairDate = '" + System.DateTime.Today.ToString("yyyy-MM-dd") + "'";
 
                 cmd.CommandType = CommandType.Text;
 
@@ -263,8 +310,12 @@ namespace NBRepair
         public void Clear()
         {
             this.NBSerial.Text = ""; this.BatterySN.Text = ""; this.KBSN.Text = ""; this.MBSN.Text = ""; this.Memory1SN.Text = ""; this.Memory2SN.Text = ""; this.HDDSN.Text = ""; this.SSDSN.Text = "";
-            this.WLANSN.Text = ""; this.FANSN.Text = ""; this.COVERSN.Text = ""; this.BRZELSN.Text = ""; this.UPSN.Text = ""; this.LOWSN.Text = ""; this.OTHERSN.Text = ""; this.RepairDesc.Text = "";
-            this.LCDSN.Text = ""; this.WLANMAC.Text = ""; this.MBMAC.Text = ""; this.label24.Text = ""; this.frontbattery.Text = ""; this.MBPN.Text = "";
+            this.WLANSN.Text = ""; this.COVERSN.Text = ""; this.BRZELSN.Text = ""; this.UPSN.Text = ""; this.LOWSN.Text = ""; this.OTHERSN.Text = ""; this.RepairDesc.Text = "";
+
+            this.OLDKBUPSN.Text = ""; this.RADAPTER.Text = ""; this.OLDRADAPTER.Text = ""; this.OLDUPSN.Text = ""; this.OLDLOWSN.Text = ""; this.OLDCOVERSN.Text = ""; this.OLDBRZELSN.Text = "";
+
+
+            this.label24.Text = ""; this.frontbattery.Text = ""; this.OLDfrontbattery.Text = ""; this.OLDBatterySN.Text = "";
         }
 
         private void NBSerial_KeyPress(object sender, KeyPressEventArgs e)
@@ -274,7 +325,7 @@ namespace NBRepair
                 if (this.NBSerial.Text != "")
                 {
                     LoadData();
-                    this.BatterySN.Focus();
+                    this.MBSN.Focus();
 
                 }
                 else
@@ -297,7 +348,17 @@ namespace NBRepair
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     string tableName = "BOMCompare";
-                    cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + MTM + "' and   TOPIC_ITEM = '" + item + "'    and    (LCFC_PN = '" + partsno1 + "' or LNV_PN = '" + partsno2 + "')";
+
+                    if (item == "")
+                    {
+                        cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + MTM + "' and      LNV_PN = '" + partsno2 + "' ";
+                    }
+                    else
+                    {
+
+                        cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + MTM + "' and   TOPIC_ITEM = '" + item + "'    and     LNV_PN = '" + partsno2 + "' ";
+                    }
+
                     SqlDataReader querySdr = cmd.ExecuteReader();
 
                     if (querySdr.HasRows == true)
@@ -385,21 +446,37 @@ namespace NBRepair
                         this.BatterySN.Text = querySdr["BatterySN"].ToString().Trim();
                         this.frontbattery .Text = querySdr["BatterySN1"].ToString().Trim();
 
+                        this.OLDBatterySN.Text = querySdr["OLDBatterySN"].ToString().Trim();
+                        this.OLDfrontbattery.Text = querySdr["OLDBatterySN1"].ToString().Trim();
+
                         this.KBSN.Text = querySdr["KBSN"].ToString().Trim();
-                        this.LCDSN.Text = querySdr["LCDSN"].ToString().Trim();
+                        this.OLDKBSN.Text = querySdr["OLDKBSN"].ToString().Trim();
                         this.MBSN.Text = querySdr["MBSN"].ToString().Trim();
-                        this.MBMAC.Text = querySdr["MBMAC"].ToString().Trim();
+                      
                         this.Memory1SN.Text = querySdr["Memory1SN"].ToString().Trim();
                         this.Memory2SN.Text = querySdr["Memory2SN"].ToString().Trim();
                         this.HDDSN.Text = querySdr["HDDSN"].ToString().Trim();
                         this.SSDSN.Text = querySdr["SSDSN"].ToString().Trim();
                         this.WLANSN.Text = querySdr["WLANSN"].ToString().Trim();
-                        this.WLANMAC.Text = querySdr["WLANMAC"].ToString().Trim();
-                        this.FANSN.Text = querySdr["FANSN"].ToString().Trim();
+                      
                         this.COVERSN.Text = querySdr["COVERSN"].ToString().Trim();
                         this.BRZELSN.Text = querySdr["BRZELSN"].ToString().Trim();
                         this.UPSN.Text = querySdr["UPSN"].ToString().Trim();
                         this.LOWSN.Text = querySdr["LOWSN"].ToString().Trim();
+
+                        this.OLDCOVERSN.Text = querySdr["OLDCOVERSN"].ToString().Trim();
+                        this.OLDBRZELSN.Text = querySdr["OLDBRZELSN"].ToString().Trim();
+                        this.OLDUPSN.Text = querySdr["OLDUPSN"].ToString().Trim();
+                        this.OLDLOWSN.Text = querySdr["OLDLOWSN"].ToString().Trim();
+
+
+
+                        this.RADAPTER.Text = querySdr["RADAPTER"].ToString().Trim();
+                        this.OLDRADAPTER.Text = querySdr["OLDRADAPTER"].ToString().Trim();
+                        this.KBUPSN.Text = querySdr["KBUPSN"].ToString().Trim();
+                        this.OLDKBUPSN.Text = querySdr["OLDKBUPSN"].ToString().Trim();
+
+
                         this.OTHERSN.Text = querySdr["OTHERSN"].ToString().Trim();
                         this.RepairDesc.Text = querySdr["RepairDesc"].ToString().Trim();
                         this.RepairMan.Text = querySdr["RepairMan"].ToString().Trim();
@@ -445,62 +522,10 @@ namespace NBRepair
 
             return partsno;
         }
-        private void BatterySN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.BatterySN.Text != "")
-                {
-                    string partsno = GetPartsNo(this.BatterySN.Text.ToUpper(), 10);
-                    if (CheckKeyPartsInBom(this.label24.Text, "BATTERY", partsno, partsno))
-                    {
-                        this.frontbattery .Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show("电池料号不对");
-                        this.BatterySN.Text = "料号不对" + this.BatterySN.Text; this.frontbattery.Focus();
-                    }
-                }
-                else
-                {
-                    this.BatterySN.Focus();
-                }
+       
 
-            }
-        }
-
-        private void KBSN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.KBSN.Text != "")
-                {
-                    this.LCDSN.Focus();
-                }
-                else
-                {
-                    this.KBSN.Focus();
-                }
-
-            }
-        }
-
-        private void LCDSN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.LCDSN.Text != "")
-                {
-                    this.MBSN.Focus();
-                }
-                else
-                {
-                    this.LCDSN.Focus();
-                }
-
-            }
-        }
+       
+        
 
         private void MBSN_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -509,50 +534,7 @@ namespace NBRepair
                 if (this.MBSN.Text != "")
                 {
                    // if(  CheckKeyPartsInBom(this.label24 .Text ,"M/B",
-                    this.MBPN.Focus();
-                }
-                else
-                {
-                    this.MBSN.Focus();
-                }
-
-            }
-        }
-
-        private void MBMAC_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.MBMAC.Text != "")
-                {
-                    this.Memory1SN .Focus();
-                }
-                else
-                {
-                    this.MBMAC.Focus();
-                }
-
-            }
-        }
-
-        private void Memory1SN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.Memory1SN.Text != "" && this.Memory1SN.Text != "NNN")
-                {
-                    string partsno = GetPartsNo(this.Memory1SN.Text.ToUpper(), 10);
-                    string topicitem = "MEMORY";
-                    if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
-                    {
-                        this.Memory2SN.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show ("内存料号不对");
-                        this.Memory1SN.Text = "料号不对" + this.Memory1SN.Text;
-                        this.Memory1SN.Focus();
-                    }
+                     this.Memory1SN.Focus();
                 }
                 else
                 {
@@ -562,23 +544,82 @@ namespace NBRepair
             }
         }
 
+      
+
+        private void Memory1SN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                if (this.Memory1SN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.Memory1SN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
+                {
+                    if (this.Memory1SN.Text != "" && this.Memory1SN.Text != "NNN")
+                    {
+                        if (this.Memory1SN.Text.ToUpper() != "NNN")
+                        {
+                            string partsno = GetPartsNo(this.Memory1SN.Text.ToUpper(), 10);
+                            string topicitem = "MEMORY";
+                            if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                            {
+                                this.Memory2SN.Focus();
+                            }
+                            else
+                            {
+                                MessageBox.Show("内存料号不对");
+                                this.Memory1SN.Text = "料号不对" + this.Memory1SN.Text;
+                                this.Memory2SN.Focus();
+                            }
+                        }
+                        else
+                        {
+                            this.Memory2SN.Focus();
+
+                        }
+                    }
+                    else
+                    {
+                        this.Memory2SN.Focus();
+                    }
+                }
+                else
+                {
+                    this.Memory1SN.Focus();
+
+                }
+            }
+        }
+
         private void Memory2SN_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
-                if (this.Memory2SN.Text != "" && this.Memory2SN.Text != "NNN")
+                if (this.Memory2SN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.Memory2SN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
                 {
-                    string partsno = GetPartsNo(this.Memory2SN.Text.ToUpper(), 10);
-                    string topicitem = "MEMORY";
-                    if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                    if (this.Memory2SN.Text != "" && this.Memory2SN.Text != "NNN")
                     {
-                        this.HDDSN.Focus();
+                        if (this.Memory2SN.Text.ToUpper() != "NNN")
+                        {
+                            string partsno = GetPartsNo(this.Memory2SN.Text.ToUpper(), 10);
+                            string topicitem = "MEMORY";
+                            if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                            {
+                                this.SSDSN.Focus();
+                            }
+                            else
+                            {
+                                MessageBox.Show("内存料号不对");
+                                this.Memory2SN.Text = "料号不对" + this.Memory2SN.Text;
+                                this.Memory2SN.Focus();
+                            }
+                        }
+                        else
+                        {
+
+                            this.SSDSN.Focus();
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("内存料号不对");
-                        this.Memory2SN.Text = "料号不对" + this.Memory2SN.Text;
-                        this.Memory2SN.Focus();
+                        this.SSDSN.Focus();
                     }
                 }
                 else
@@ -593,26 +634,41 @@ namespace NBRepair
         {
             if (e.KeyChar == 13)
             {
-                if (this.HDDSN.Text != "" && this.HDDSN.Text != "NNN")
+
+                if (this.HDDSN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.HDDSN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
                 {
-                    string partsno = GetPartsNo(this.HDDSN.Text.ToUpper(), 10);
-                    string topicitem = "HDD";
-                    if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                    if (this.HDDSN.Text != "" && this.HDDSN.Text != "NNN")
                     {
-                        this.SSDSN.Focus();
+                        if (this.HDDSN.Text.ToUpper() != "NNN")
+                        {
+                            string partsno = GetPartsNo(this.HDDSN.Text.ToUpper(), 10);
+                            string topicitem = "HDD";
+                            if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                            {
+                                this.WLANSN.Focus();
+                            }
+                            else
+                            {
+                                MessageBox.Show("HDD 料号不对");
+                                this.HDDSN.Text = "料号不对" + this.HDDSN.Text;
+                                this.HDDSN.Focus();
+                            }
+                        }
+                        else
+                        {
+                            this.WLANSN.Focus();
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("HDD 料号不对");
-                        this.HDDSN.Text = "料号不对" + this.HDDSN.Text;
-                        this.HDDSN.Focus();
+                        this.WLANSN.Focus();
                     }
                 }
                 else
                 {
                     this.HDDSN.Focus();
-                }
 
+                }
             }
         }
 
@@ -620,91 +676,84 @@ namespace NBRepair
         {
             if (e.KeyChar == 13)
             {
-                if (this.SSDSN.Text != "" && this.SSDSN.Text != "NNN")
+                if (this.SSDSN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.SSDSN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
                 {
-                    string partsno = GetPartsNo(this.SSDSN.Text.ToUpper(), 10);
-                    string topicitem = "SSD";
-                    if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                    if (this.SSDSN.Text != "" && this.SSDSN.Text != "NNN")
                     {
-                        this.WLANSN.Focus();
+                        if (this.SSDSN.Text.ToUpper() != "NNN")
+                        {
+                            string partsno = GetPartsNo(this.SSDSN.Text.ToUpper(), 10);
+                            string topicitem = "SSD";
+                            if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                            {
+                                this.HDDSN.Focus();
+                            }
+                            else
+                            {
+                                MessageBox.Show("SSD   料号不对");
+                                this.SSDSN.Text = "料号不对" + this.SSDSN.Text;
+                                this.SSDSN.Focus();
+                            }
+                        }
+                        else
+                        {
+                            this.HDDSN.Focus();
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("SSD   料号不对");
-                        this.SSDSN.Text = "料号不对" + this.SSDSN.Text;
-                        this.SSDSN.Focus();
+                        this.HDDSN.Focus();
                     }
                 }
                 else
                 {
                     this.SSDSN.Focus();
+
                 }
 
             }
         }
 
-        private void WLANMAC_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (this.WLANMAC.Text != "")
-                {
-                    this.FANSN.Focus();
-
-
-                }
-                else
-                {
-                    this.WLANMAC.Focus();
-                }
-
-            }
-        }
+       
 
         private void WLANSN_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
-                if (this.WLANSN.Text != "")
+                if (this.WLANSN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.WLANSN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
                 {
-                    /*
-                    string partsno = GetPartsNo(this.BatterySN.Text.ToUpper(), 10);
-                    string topicitem = "WLAN";
-                    if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                    if (this.WLANSN.Text != "" && this.WLANSN.Text != "NNN")
                     {
-                        this.WLANSN.Focus();
+                        if (this.WLANSN.Text.ToUpper() != "NNN")
+                        {
+                            string partsno = GetPartsNo(this.BatterySN.Text.ToUpper(), 10);
+                            string topicitem = "";
+                            if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
+                            {
+                                this.RepairMan.Focus();
+                            }
+                            else
+                            {
+                                MessageBox.Show("WLAN 卡   料号不对");
+                                this.WLANSN.Text = "";
+                                this.WLANSN.Focus();
+                            }
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("WLAN 卡   料号不对");
-                        this.WLANSN.Text = "";
-                        this.WLANSN.Focus();
-                    }
-                     * */
                 }
                 else
                 {
                     this.WLANSN.Focus();
                 }
-
             }
-        }
-
-        private void FANSN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
+            else
             {
-                if (this.FANSN.Text != "")
-                {
-                    this.RepairMan.Focus();
-                }
-                else
-                {
-                    this.FANSN.Focus();
-                }
-
+               this.WLANSN.Focus();
             }
-        }
+        
+    }
+
+       
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -765,56 +814,89 @@ namespace NBRepair
        */
         }
 
+        private void COVERSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDCOVERSN.Focus();
+
+            }
+        }
+
+        private void BRZELSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                BRZELSN.Focus();
+
+            }
+        }
+
+        private void LOWSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDLOWSN.Focus();
+
+            }
+        }
+
+        private void UPSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDUPSN.Focus();
+            }
+        }
+
+        private void KBSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDKBSN.Focus();
+            }
+        }
+
+        private void KBUPSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDKBUPSN.Focus();
+            }
+        }
+
+        private void BatterySN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDBatterySN.Focus();
+            }
+        }
+
         private void frontbattery_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
-                if (this.frontbattery.Text != "")
-                {
-                    string partsno = GetPartsNo(this.frontbattery.Text.ToUpper(), 10);
-                    if (CheckKeyPartsInBom(this.label24.Text, "FRONT BATTERY", partsno, partsno))
-                    {
-                        this.KBSN.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show(" 电池料号不对");
-                        this.frontbattery.Text = "料号不对" + this.frontbattery.Text; this.KBSN.Focus();
-                    }
-                }
-                else
-                {
-                    this.KBSN.Focus();
-                }
-
+                OLDfrontbattery.Focus();
             }
         }
 
-        private void MBPN_KeyPress(object sender, KeyPressEventArgs e)
+        private void RADAPTER_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
-                if (this.MBPN.Text != "")
-                {
-                    string partsno = GetPartsNo(this.MBPN.Text.ToUpper(), 10);
-                    if (CheckKeyPartsInBom(this.label24.Text, "M/B", partsno, partsno))
-                    {
-                        this.MBMAC.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show(" MB   料号不对");
-                        this.MBPN.Text = "料号不对" + this.MBPN.Text; this.MBMAC.Focus();
-                    }
-                }
-                else
-                {
-                    this.MBPN.Focus();
-                }
-
+                OLDRADAPTER.Focus();
             }
         }
 
-     
+        private void OTHERSN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                OLDOTHERSN.Focus();
+            }
+        }
+
+      
     }
 }

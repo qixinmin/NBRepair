@@ -179,6 +179,9 @@ namespace NBRepair
                         tableName = "BOMCompare";
                         cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + V_MTM_TBG + "'  and INDICATOR_TYPE = '" + "M" + "' ";
                         querySdr = cmd.ExecuteReader();
+
+                        //SqlConnection conn1 = new SqlConnection(Conlist.ConStr);
+                        //conn1.Open();
                         SqlCommand cmd1 = new SqlCommand();
                         cmd1.Connection = conn1;
                         cmd1.CommandType = CommandType.Text;

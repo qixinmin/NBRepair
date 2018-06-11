@@ -1,4 +1,3 @@
-D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\Interop.LabelManager2.dll
 D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\Interop.TkxRFTAG.dll
 D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\NBRepair.csproj.ResolveComReference.cache
 D:\机器CSD\NBRepair\NBRepair\bin\Release\NBRepair.exe
@@ -66,3 +65,9 @@ D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.exe
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\NBRepair.pdb
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.ReturnCustomInfoImportForm.resources
 D:\维修系统\NBRepair\NBRepair\obj\x86\Release\SaledServices.FaultMaterialOutForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.CompanyFixedForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.OpeningStockForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.RealStockForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.ReturnCustomInfoImportForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.CustomsExport.StockInOutForm.resources
+D:\机器CSD\NBRepair\NBRepair\obj\x86\Release\SaledServices.FaultMaterialOutForm.resources

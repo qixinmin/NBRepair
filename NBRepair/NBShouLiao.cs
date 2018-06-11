@@ -86,7 +86,7 @@ namespace NBRepair
                             this.ConfigDesc.Text.Trim() + "','" +
                             this.CheckMan.Text.Trim() + "','" +
                             "待修" + "','" +
-                             System.DateTime.Today.ToShortDateString() +
+                             System.DateTime.Today.ToShortDateString() + "','" +
                              this.declearNumbeTextBox.Text.Trim() + "','" +
                              System.DateTime.Today.ToShortDateString() +
                              "')";
@@ -356,7 +356,7 @@ namespace NBRepair
                 if (this.AdapterSN.Text != "")
                 {
 
-                    string partsno = GetPartsNo(this.AdapterSN.Text.ToUpper(), 7);
+                    string partsno = GetPartsNo(this.AdapterSN.Text.ToUpper(), 10);
                     string topicitem = "AC ADAP";
 
                     if (CheckKeyPartsInBom(this.NBSerial.Text.Trim().Substring(2, 10).ToUpper (), topicitem, partsno, partsno) == true)// PWR CORD
@@ -383,7 +383,7 @@ namespace NBRepair
             {
                 if (PowerCodeSN.Text != "")
                 {
-
+                    /*
                     string partsno = GetPartsNo(this.PowerCodeSN.Text.ToUpper(), 7);
                     string topicitem = "PWR CORD";
 
@@ -396,6 +396,7 @@ namespace NBRepair
                         this.PowerCodeSN.Text = "FailOn" + this.AdapterSN.Text; this.PowerCodeSN.Focus();
                         MessageBox.Show("电源线   料号不对！");
                     }
+                     * */
                 }
                 this.FunctionOK.Focus();
             }

@@ -14,8 +14,8 @@ namespace NBRepair
     public class Conlist
     {
          // public static string ConStr = "server=192.168.1.122;database=NBREPAIER;uid=root;pwd=root";
-        //public static string Con = "server=192.168.1.122;uid=admin;pwd=admin";
-        public static string ConStr = "server=.;database=NBREPAIER;uid=admin;pwd=admin";
+        public static string ConStr = "server=192.168.9.11;uid=admin;pwd=admin";
+        //public static string ConStr = "server=.;database=NBREPAIER;uid=admin;pwd=admin";
         public static void WriteStrBatFile(string path, string name, string content)
         {
             string ename = path + "\\" + name + ".bat";
