@@ -213,6 +213,5 @@ namespace NBRepair
                 GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).
                 SetValue(tableLayoutPanel2, true, null);
         }
-
     }
 }

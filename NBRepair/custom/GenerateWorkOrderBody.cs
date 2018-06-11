@@ -49,7 +49,8 @@ namespace SaledServices.CustomsExport
                 cmd.CommandType = CommandType.Text;
 
                 //使用PackDate日期而不是采用维修日期，因为pack的日期确定了全部的使用材料
-                cmd.CommandText = "select NBSerial, COVERSN, BRZELSN,UPSN,LOWSN,OTHERSN,RepairDate from NBShouLiao where PackDate between '" + startTime + "' and '" + endTime + "'";
+
+                cmd.CommandText = "select NBSerial,COVERSN,BRZELSN,UPSN,LOWSN,KBSN,KBUPSN,BatterySN,BatterySN1,RADAPTER,OTHERSN,materials,RepairDate from NBShouLiao where PackDate between '" + startTime + "' and '" + endTime + "'";
                 SqlDataReader querySdr = cmd.ExecuteReader();
 
                 while (querySdr.Read())
@@ -59,9 +60,9 @@ namespace SaledServices.CustomsExport
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
                         MaterialCustomRelationTemp.mpn = querySdr[1].ToString().Trim();
-                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
-                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
 
                         MaterialCustomRelationList.Add(MaterialCustomRelationTemp);          
                     }
@@ -71,9 +72,9 @@ namespace SaledServices.CustomsExport
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
                         MaterialCustomRelationTemp.mpn = querySdr[2].ToString().Trim();
-                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
-                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
 
                         MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
                     }
@@ -83,9 +84,9 @@ namespace SaledServices.CustomsExport
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
                         MaterialCustomRelationTemp.mpn = querySdr[3].ToString().Trim();
-                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
-                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
 
                         MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
                     }
@@ -95,9 +96,9 @@ namespace SaledServices.CustomsExport
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
                         MaterialCustomRelationTemp.mpn = querySdr[4].ToString().Trim();
-                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
-                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
 
                         MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
                     }
@@ -107,12 +108,99 @@ namespace SaledServices.CustomsExport
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
                         MaterialCustomRelationTemp.mpn = querySdr[5].ToString().Trim();
-                        MaterialCustomRelationTemp.num = "1";
+                        MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
-                        MaterialCustomRelationTemp.date = querySdr[6].ToString();
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
 
                         MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
-                    }                            
+                    }
+
+                    if (querySdr[6].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[6].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "-1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[7].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[7].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "-1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[8].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[8].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "-1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[9].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[9].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "-1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+                    if (querySdr[10].ToString().Trim() != "")
+                    {
+                        MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                        MaterialCustomRelationTemp.mpn = querySdr[10].ToString().Trim();
+                        MaterialCustomRelationTemp.num = "-1";
+                        MaterialCustomRelationTemp.declare_unit = "个";
+                        MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                        MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                    }
+
+
+                    if (querySdr[11].ToString().Trim() != "")
+                    {
+                        string content = querySdr[11].ToString().Trim();
+                        string[] contentarray = content.Split(':');
+                        Dictionary<string, string> material_num = new Dictionary<string,string>();
+                        foreach(string temp in contentarray)
+                        {
+                            if(temp.Trim() != "")
+                            {
+                                material_num.Add(temp.Split(',')[0], temp.Split(',')[1]);
+                            }
+                        }
+                       // HG12S000100,1:HG0SA000I00,1:HG0ZJ000U00,1:HG0SI000E00,1:HG0TX000X00,1:HG0TS000J00,1:HK0SI000600,1:HK0ZQ000100,1:HE12D000100,2:HE169000210,1:HK0TV000100,1:HA105000100,1:HE105000100,1:HB10A000100,1: 
+                        foreach (string key in material_num.Keys)
+                        {
+                            MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
+                            MaterialCustomRelationTemp.id = querySdr[0].ToString();
+                            MaterialCustomRelationTemp.mpn = key;
+                            MaterialCustomRelationTemp.num = "-"+material_num[key];
+                            MaterialCustomRelationTemp.declare_unit = "个";
+                            MaterialCustomRelationTemp.date = querySdr[12].ToString();
+
+                            MaterialCustomRelationList.Add(MaterialCustomRelationTemp);
+                        }                       
+                    }
                 }
                 querySdr.Close();
 

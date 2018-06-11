@@ -150,8 +150,8 @@ namespace NBRepair
                             V_MTM_TBG = querySdr["SKU"].ToString().Trim();
                             V_SSN = "TR" + querySdr["NBSN"].ToString().Trim().Substring(2, 6);
                             V_UUID = querySdr["UUID"].ToString().Trim();
-                            V_KEYPARTS_WLAN_MAC = querySdr["WLANMAC"].ToString().Trim();
-                            V_KEYPARTS_LAN_MAC = querySdr["MBMAC"].ToString().Trim();
+                            //V_KEYPARTS_WLAN_MAC = querySdr["WLANMAC"].ToString().Trim();
+                            //V_KEYPARTS_LAN_MAC = querySdr["MBMAC"].ToString().Trim();
 
                             NBID = querySdr["NBID"].ToString().Trim();
                             customer = querySdr["customer"].ToString().Trim();
@@ -161,7 +161,7 @@ namespace NBRepair
                         }
                         else
                         {
-                            MessageBox.Show(" 没有这个记录！！！"); this.NBSerial.Focus();
+                            MessageBox.Show("没有这个记录！！！"); this.NBSerial.Focus();
                         }
                     }
 
@@ -200,44 +200,44 @@ namespace NBRepair
                               "')";
                             cmd1.ExecuteNonQuery();
 
-                            //更新料号数量
-                            string partsno = lcfcpn;
-                            cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
-                            querySdr = cmd.ExecuteReader();
-                            string left_number = "";
-                            while (querySdr.Read())
-                            {
-                                left_number = querySdr[1].ToString();
-                                break;
-                            }
-                            querySdr.Close();
+                            ////更新料号数量
+                            //string partsno = lcfcpn;
+                            //cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
+                            //querySdr = cmd.ExecuteReader();
+                            //string left_number = "";
+                            //while (querySdr.Read())
+                            //{
+                            //    left_number = querySdr[1].ToString();
+                            //    break;
+                            //}
+                            //querySdr.Close();
 
-                            if (left_number == null || left_number == "")
-                            {
-                                conn.Close();
-                                MessageBox.Show("此料号没有库存！");
-                                return;
-                            }
+                            //if (left_number == null || left_number == "")
+                            //{
+                            //    conn.Close();
+                            //    MessageBox.Show("此料号没有库存！");
+                            //    return;
+                            //}
 
-                            try
-                            {
-                                int totalLeft = Int32.Parse(left_number);
-                                int thistotal = totalLeft - Int32.Parse(partsqty);
+                            //try
+                            //{
+                            //    int totalLeft = Int32.Parse(left_number);
+                            //    int thistotal = totalLeft - Int32.Parse(partsqty);
 
-                                if (thistotal < 0)
-                                {
-                                    conn.Close();
-                                    MessageBox.Show("数量不够，不能出库！");
-                                    return;
-                                }
+                            //    if (thistotal < 0)
+                            //    {
+                            //        conn.Close();
+                            //        MessageBox.Show("数量不够，不能出库！");
+                            //        return;
+                            //    }
 
-                                cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
-                                cmd.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.ToString());
-                            }
+                            //    cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                            //    cmd.ExecuteNonQuery();
+                            //}
+                            //catch (Exception ex)
+                            //{
+                            //    MessageBox.Show(ex.ToString());
+                            //}
                         }
 
                         cmd1.Clone();
@@ -282,7 +282,7 @@ namespace NBRepair
                                 1 + "','" +
                                 System.DateTime.Today.ToShortDateString() +
                                 "')";
-                            //querySdr.Close();
+                            querySdr.Close();
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("New  out    NBRUKU   Save OK");
                         }
@@ -295,7 +295,7 @@ namespace NBRepair
                         while (querySdr.Read())
                         {
                             exist = true;
-                            number = querySdr[1].ToString();
+                            number = querySdr[0].ToString();
                             break;
                         }
                         querySdr.Close();
@@ -312,11 +312,11 @@ namespace NBRepair
 
                             if (exist)
                             {
-                                cmd.CommandText = "update NBHouse set number = '" + thistotal + " where model='" + Model + "'";
+                                cmd.CommandText = "update NBHouse set number = '" + thistotal + "' where model='" + Model + "'";
                             }
                             else
                             {
-                                cmd.CommandText = "INSERT INTO NBHouse (number, materialNo ) VALUES('" + thistotal + "','" + Model + "')";
+                                cmd.CommandText = "INSERT INTO NBHouse (number, model) VALUES('" + thistotal + "','" + Model + "')";
                             }
 
                             cmd.ExecuteNonQuery();
@@ -419,7 +419,6 @@ namespace NBRepair
                         cmd.Dispose();
                     }
                 }
-
 
                 conn.Close();
 

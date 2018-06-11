@@ -41,7 +41,10 @@ namespace NBRepair
                         while (querySdr.Read())
                         {
                             findok = true;
-                            vender = querySdr["vendor"].ToString(); customer = querySdr["customer"].ToString(); NBID = querySdr["NBID"].ToString(); NBSerial = querySdr["NewNBSerial"].ToString();
+                            vender = querySdr["vendor"].ToString(); 
+                            customer = querySdr["customer"].ToString(); 
+                            NBID = querySdr["NBID"].ToString(); 
+                            NBSerial = querySdr["NewNBSerial"].ToString();
                             Model = querySdr["Model"].ToString();
                         }
                         if (findok == true)
@@ -91,11 +94,160 @@ namespace NBRepair
                                     "')";
                                 querySdr.Close();
                                 cmd.ExecuteNonQuery();
-                                // MessageBox.Show("New  chu  Save OK");
+
+                                //此时对材料进行操作，因为之前的材料一直被更新，不能确定，所以放在出库来确定更新, 满足条件的是会产生不良品
+                                cmd.CommandText = "select partsno from ChuKu where countfile ='" + NBID + "' and keyinman != countfile";
+                                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                                List<string> usedPartsNo = new List<string>();
+                                while (sqlDataReader.Read())
+                                {
+                                    usedPartsNo.Add(sqlDataReader[0].ToString().Trim());
+                                }
+                                sqlDataReader.Close();
+
+                                foreach (string partsno in usedPartsNo)
+                                {
+                                    //更新料号数量
+                                    //string partsno = str[i].Substring(0, 11);
+                                    cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
+                                    querySdr = cmd.ExecuteReader();
+                                    string left_number = "";
+                                    while (querySdr.Read())
+                                    {
+                                        left_number = querySdr[0].ToString();
+                                        break;
+                                    }
+                                    querySdr.Close();
+
+                                    if (left_number == null || left_number == "")
+                                    {
+                                        conn.Close();
+                                        MessageBox.Show("此料号没有库存！");
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        int totalLeft = Int32.Parse(left_number);
+                                        int thistotal = totalLeft - 1;
+
+                                        if (thistotal < 0)
+                                        {
+                                            conn.Close();
+                                            MessageBox.Show("数量不够，不能出库！");
+                                            return;
+                                        }
+
+                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + "' where materialNo='" + partsno + "'";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.ToString());
+                                    }
+
+                                    //对应的材料入不良品库
+                                    //入不良品库记录
+                                    cmd.CommandText = "INSERT INTO materialNgHouseRecord (materialNo,number,input_date)  VALUES('" +
+                                        partsno + "','" +
+                                        1 + "','" +
+                                        System.DateTime.Today.ToShortDateString() +
+                                     "')";
+                                    cmd.ExecuteNonQuery();
+
+                                    //更新不良品库数量
+                                    cmd.CommandText = "select number from materialNgHouse where materialNo='" + partsno + "'";
+                                    querySdr = cmd.ExecuteReader();
+                                    bool exist = false;
+                                    left_number = "";
+                                    while (querySdr.Read())
+                                    {
+                                        left_number = querySdr[0].ToString();
+                                        exist = true;
+                                        break;
+                                    }
+                                    querySdr.Close();
+
+                                    if (left_number == null || left_number == "")
+                                    {
+                                        left_number = "0";
+                                    }
+
+                                    try
+                                    {
+                                        int totalLeft = Int32.Parse(left_number);
+                                        int thistotal = totalLeft + 1;
+
+                                        if (exist)
+                                        {
+                                            cmd.CommandText = "update materialNgHouse set number = '" + thistotal + "' where materialNo='" + partsno + "'";
+                                        }
+                                        else
+                                        {
+                                            cmd.CommandText = "INSERT INTO materialNgHouse(number, materialNo) VALUES('" + thistotal + "','" + partsno + "')";
+                                        }
+
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.ToString());
+                                    }
+                                }
+
+                                //在打包的时候，也注意耗材的产生
+                                cmd.CommandText = "select partsno,qty from ChuKu where countfile ='" + NBID + "' and keyinman = countfile";
+                                sqlDataReader = cmd.ExecuteReader();
+                                Dictionary<string, string> material_num = new Dictionary<string, string>();
+                                while (sqlDataReader.Read())
+                                {
+                                    material_num.Add(sqlDataReader[0].ToString().Trim(), sqlDataReader[1].ToString().Trim());
+                                }
+                                sqlDataReader.Close();
+
+                                foreach (string partsno in material_num.Keys)
+                                {
+                                    //更新料号数量
+                                    //string partsno = lcfcpn;
+                                    cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
+                                    querySdr = cmd.ExecuteReader();
+                                    string left_number = "";
+                                    while (querySdr.Read())
+                                    {
+                                        left_number = querySdr[1].ToString();
+                                        break;
+                                    }
+                                    querySdr.Close();
+
+                                    if (left_number == null || left_number == "")
+                                    {
+                                        conn.Close();
+                                        MessageBox.Show("此料号没有库存！");
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        int totalLeft = Int32.Parse(left_number);
+                                        int thistotal = totalLeft - Int32.Parse(material_num[partsno]);
+
+                                        if (thistotal < 0)
+                                        {
+                                            conn.Close();
+                                            MessageBox.Show("数量不够，不能出库！");
+                                            return;
+                                        }
+
+                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.ToString());
+                                    }
+                                }
                             }
                             cmd.Dispose();
-
-                            
                         }
                     }
                     conn.Close();
@@ -148,11 +300,8 @@ namespace NBRepair
             else
             {
                 checkBox1.Text = "良品";
-
             }
         }
-
-      
 
         public bool DataSetToExcel(DataSet dataSet, string fileName, bool isShowExcle)
         {
