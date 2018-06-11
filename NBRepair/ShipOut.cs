@@ -47,6 +47,7 @@ namespace NBRepair
                             NBSerial = querySdr["NewNBSerial"].ToString();
                             Model = querySdr["Model"].ToString();
                         }
+
                         if (findok == true)
                         {
                             cmd.CommandText = "update " + tableName + " set ShipDate ='" + System.DateTime.Now.ToShortDateString()
@@ -214,7 +215,7 @@ namespace NBRepair
                                     string left_number = "";
                                     while (querySdr.Read())
                                     {
-                                        left_number = querySdr[1].ToString();
+                                        left_number = querySdr[0].ToString();
                                         break;
                                     }
                                     querySdr.Close();
@@ -238,7 +239,7 @@ namespace NBRepair
                                             return;
                                         }
 
-                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
+                                        cmd.CommandText = "update materialhouse set number = '" + thistotal + "' where materialNo='" + partsno + "'";
                                         cmd.ExecuteNonQuery();
                                     }
                                     catch (Exception ex)
