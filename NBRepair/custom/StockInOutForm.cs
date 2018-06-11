@@ -68,14 +68,14 @@ namespace SaledServices.CustomsExport
 
                     //1 整机待维修入库
                     List<TrackNoCustomRelation> TrackNoCustomRelationList = new List<TrackNoCustomRelation>();
-                    cmd.CommandText = "select NBSerial,Model,declearNumber from NBShouLiao where receiveDate between '" + startTime + "' and '" + endTime + "'";
+                    cmd.CommandText = "select NBSerial,Model,declearNumber,receiveDate from NBShouLiao where receiveDate between '" + startTime + "' and '" + endTime + "'";
                     SqlDataReader querySdr = cmd.ExecuteReader();
                     while (querySdr.Read())
                     {
                         TrackNoCustomRelation TrackNoCustomRelationTemp = new TrackNoCustomRelation();
                         TrackNoCustomRelationTemp.trackno = querySdr[0].ToString();
                         TrackNoCustomRelationTemp.custom_materialNo = querySdr[1].ToString();//正常使用客户料号
-                        TrackNoCustomRelationTemp.date = querySdr[2].ToString();
+                        TrackNoCustomRelationTemp.date = querySdr[3].ToString();
                         TrackNoCustomRelationTemp.declare_unit = "台";
                         TrackNoCustomRelationList.Add(TrackNoCustomRelationTemp);
                     }
@@ -303,7 +303,7 @@ namespace SaledServices.CustomsExport
 
                     //6 不良品材料入库
                     MaterialCustomRelationList.Clear();
-                    cmd.CommandText = "select Id,materialNo,number,input_date from ChuKu where input_date between '" + startTime + "' and '" + endTime + "'";
+                    cmd.CommandText = "select Id,materialNo,number,input_date from materialNgHouseRecord where input_date between '" + startTime + "' and '" + endTime + "'";
                     querySdr = cmd.ExecuteReader();
                     while (querySdr.Read())
                     {
