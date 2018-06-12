@@ -227,7 +227,7 @@ namespace NBRepair
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
                     string tableName = "BOMCompare";
-                    cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + MTM + "'  and    (TOPIC_ITEM = '" + "PWR CODE" + "' or TOPIC_ITEM = '" + "M/B" + "'  or TOPIC_ITEM = '" + "MEMORY" + "' or TOPIC_ITEM = '" + "SSD" + "' or TOPIC_ITEM = '" + "HDD" + "'   or TOPIC_ITEM = '" + "BATTERY" + "'or TOPIC_ITEM = '" + "AC ADAP" + "')";
+                    cmd.CommandText = "select *  from " + tableName + " where SKU_LNO = '" + MTM + "'  and    INDICATOR_TYPE = 'N'";
                     SqlDataAdapter sda = new SqlDataAdapter();
                     sda.SelectCommand = cmd;
                    
