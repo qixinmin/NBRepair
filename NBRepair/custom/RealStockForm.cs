@@ -55,9 +55,21 @@ namespace SaledServices.CustomsExport
                 cmd.Connection = mConn;
                 cmd.CommandType = CommandType.Text;
 
+                Dictionary<string, string> nameDir = new Dictionary<string, string>();
+                cmd.CommandText = "select distinct SKU_LNO,SKU_NO from BOMCompare";
+                SqlDataReader querySdr = cmd.ExecuteReader();
+                while (querySdr.Read())
+                {
+                    if (nameDir.ContainsKey(querySdr[0].ToString().Trim()) == false)
+                    {
+                        nameDir.Add(querySdr[0].ToString().Trim(), querySdr[1].ToString().Trim());
+                    }
+                }
+                querySdr.Close();
+
                 //1 读取材料库房信息
                 cmd.CommandText = "select materialNo,number from materialhouse where materialNo!='' and number !='0'";
-                SqlDataReader querySdr = cmd.ExecuteReader();
+                querySdr = cmd.ExecuteReader();
                 while (querySdr.Read())
                 {
                     StoreAmount init1 = new StoreAmount();
@@ -76,6 +88,41 @@ namespace SaledServices.CustomsExport
                 }
                 querySdr.Close();
 
+                //2 读取在维修的整机，还没有走到包装步骤 
+                Dictionary<string, int> reparingNum = new Dictionary<string, int>();
+                cmd.CommandText = "select  SKU from NBShouLiao where receiveDate !='' and PackDate is NULL";
+                querySdr = cmd.ExecuteReader();
+                while (querySdr.Read())
+                {
+
+                    if (reparingNum.ContainsKey(querySdr[0].ToString().Trim()))
+                    {
+                        reparingNum[querySdr[0].ToString().Trim()] = reparingNum[querySdr[0].ToString().Trim()] + 1;
+                    }
+                    else
+                    {
+                        reparingNum[querySdr[0].ToString().Trim()] = 1;
+                    }
+                }
+                querySdr.Close();
+
+                foreach (string key in reparingNum.Keys)
+                {
+                    StoreAmount init1 = new StoreAmount();
+                    init1.ems_no = ems_no;
+                    init1.cop_g_no = nameDir[key];
+                    init1.qty = reparingNum[key] + "";
+                    init1.unit = "001";
+                    init1.goods_nature = "I";//代码
+                    init1.bom_version = "";
+                    init1.stock_date = Untils.getCustomCurrentDate();
+                    init1.date_type = "B";//代码
+                    init1.whs_code = "";
+                    init1.location_code = "";
+                    init1.note = "";
+                    storeAmountList.Add(init1);
+                }
+
                 //2 整机良品库
                 cmd.CommandText = "select model,number from NBHouse where model!='' and number !='0'";
                 querySdr = cmd.ExecuteReader();
@@ -83,7 +130,7 @@ namespace SaledServices.CustomsExport
                 {
                     StoreAmount init1 = new StoreAmount();
                     init1.ems_no = ems_no;
-                    init1.cop_g_no = querySdr[0].ToString();
+                    init1.cop_g_no = nameDir[querySdr[0].ToString()];
                     init1.qty = querySdr[1].ToString();
                     init1.unit = "007";
                     init1.goods_nature = "I";//代码

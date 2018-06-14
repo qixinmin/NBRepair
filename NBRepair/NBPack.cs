@@ -199,49 +199,12 @@ namespace NBRepair
                                 System.DateTime.Today.ToShortDateString() +
                               "')";
                             cmd1.ExecuteNonQuery();
-
-                            ////更新料号数量
-                            //string partsno = lcfcpn;
-                            //cmd.CommandText = "select number from materialhouse where materialNo='" + partsno + "'";
-                            //querySdr = cmd.ExecuteReader();
-                            //string left_number = "";
-                            //while (querySdr.Read())
-                            //{
-                            //    left_number = querySdr[1].ToString();
-                            //    break;
-                            //}
-                            //querySdr.Close();
-
-                            //if (left_number == null || left_number == "")
-                            //{
-                            //    conn.Close();
-                            //    MessageBox.Show("此料号没有库存！");
-                            //    return;
-                            //}
-
-                            //try
-                            //{
-                            //    int totalLeft = Int32.Parse(left_number);
-                            //    int thistotal = totalLeft - Int32.Parse(partsqty);
-
-                            //    if (thistotal < 0)
-                            //    {
-                            //        conn.Close();
-                            //        MessageBox.Show("数量不够，不能出库！");
-                            //        return;
-                            //    }
-
-                            //    cmd.CommandText = "update materialhouse set number = '" + thistotal + " where materialNo='" + partsno + "'";
-                            //    cmd.ExecuteNonQuery();
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    MessageBox.Show(ex.ToString());
-                            //}
                         }
 
                         cmd1.Clone();
                         querySdr.Close();
+
+
                         tableName = "NBShouLiao";
                         cmd.CommandText = "update " + tableName + " set NewAdapterSN = '" + this.NewAdapterSN.Text.Trim()
                                          + "',NewPowerCodeSN = '" + this.NewPowerCodeSN.Text.Trim() + " "
@@ -287,8 +250,19 @@ namespace NBRepair
                             MessageBox.Show("New  out    NBRUKU   Save OK");
                         }
 
+                        //根据序列号查询Sku料号
+                        cmd.CommandText = "select SKU from NBShouLiao where NBSerial='" + NBSerial + "'";
+                        querySdr = cmd.ExecuteReader();
+                        string relatedSku = "";                       
+                        while (querySdr.Read())
+                        {
+                            relatedSku = querySdr[0].ToString();
+                            break;
+                        }
+                        querySdr.Close();
+
                         //update 料号数量
-                        cmd.CommandText = "select number from NBHouse where model='" + Model + "'";
+                        cmd.CommandText = "select number from NBHouse where model='" + relatedSku + "'";
                         querySdr = cmd.ExecuteReader();
                         string number = "";
                         bool exist = false;
@@ -312,11 +286,11 @@ namespace NBRepair
 
                             if (exist)
                             {
-                                cmd.CommandText = "update NBHouse set number = '" + thistotal + "' where model='" + Model + "'";
+                                cmd.CommandText = "update NBHouse set number = '" + thistotal + "' where model='" + relatedSku + "'";
                             }
                             else
                             {
-                                cmd.CommandText = "INSERT INTO NBHouse (number, model) VALUES('" + thistotal + "','" + Model + "')";
+                                cmd.CommandText = "INSERT INTO NBHouse (number, model) VALUES('" + thistotal + "','" + relatedSku + "')";
                             }
 
                             cmd.ExecuteNonQuery();

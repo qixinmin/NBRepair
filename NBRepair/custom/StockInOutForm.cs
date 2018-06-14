@@ -66,15 +66,27 @@ namespace SaledServices.CustomsExport
                     generateWorkOrderHead = new GenerateWorkOrderHead(trade_code, ems_no, dt);
                     generateWorkOrderBody = new GenerateWorkOrderBody(trade_code, ems_no, dt);
 
+                    Dictionary<string, string> nameDir = new Dictionary<string, string>();
+                    cmd.CommandText = "select distinct SKU_LNO,SKU_NO from BOMCompare";
+                    SqlDataReader querySdr = cmd.ExecuteReader();
+                    while (querySdr.Read())
+                    {
+                        if (nameDir.ContainsKey(querySdr[0].ToString().Trim()) == false)
+                        {
+                            nameDir.Add(querySdr[0].ToString().Trim(), querySdr[1].ToString().Trim());
+                        }
+                    }
+                    querySdr.Close();
+
                     //1 整机待维修入库
                     List<TrackNoCustomRelation> TrackNoCustomRelationList = new List<TrackNoCustomRelation>();
-                    cmd.CommandText = "select NBSerial,Model,declearNumber,receiveDate from NBShouLiao where receiveDate between '" + startTime + "' and '" + endTime + "'";
-                    SqlDataReader querySdr = cmd.ExecuteReader();
+                    cmd.CommandText = "select NBSerial,SKU,declearNumber,receiveDate from NBShouLiao where receiveDate between '" + startTime + "' and '" + endTime + "'";
+                    querySdr = cmd.ExecuteReader();
                     while (querySdr.Read())
                     {
                         TrackNoCustomRelation TrackNoCustomRelationTemp = new TrackNoCustomRelation();
                         TrackNoCustomRelationTemp.trackno = querySdr[0].ToString();
-                        TrackNoCustomRelationTemp.custom_materialNo = querySdr[1].ToString();//正常使用客户料号
+                        TrackNoCustomRelationTemp.custom_materialNo = nameDir[querySdr[1].ToString()];//正常使用客户料号
                         TrackNoCustomRelationTemp.date = querySdr[3].ToString();
                         TrackNoCustomRelationTemp.declare_unit = "台";
                         TrackNoCustomRelationList.Add(TrackNoCustomRelationTemp);
@@ -131,6 +143,17 @@ namespace SaledServices.CustomsExport
                         }
                     }
 
+                    ////根据序列号查询Sku料号
+                    //cmd.CommandText = "select SKU from NBShouLiao where NBSerial='" + NBSerial + "'";
+                    //querySdr = cmd.ExecuteReader();
+                    //string relatedSku = "";
+                    //while (querySdr.Read())
+                    //{
+                    //    relatedSku = querySdr[0].ToString();
+                    //    break;
+                    //}
+                    //querySdr.Close();
+
                     //3 整机良品入库信息
                     TrackNoCustomRelationList.Clear();
                     cmd.CommandText = "select NBSerial,Model,rukudate from OUTNBRUKU where rukudate between '" + startTime + "' and '" + endTime + "'";
@@ -147,6 +170,20 @@ namespace SaledServices.CustomsExport
                         TrackNoCustomRelationList.Add(TrackNoCustomRelationTemp);
                     }
                     querySdr.Close();
+
+                    //转换从NBSerial转成SKU
+                    foreach (TrackNoCustomRelation trackTemp in TrackNoCustomRelationList)
+                    {
+                        cmd.CommandText = "select SKU from NBShouLiao where NBSerial='" + trackTemp.trackno + "'";
+                        querySdr = cmd.ExecuteReader();
+                      
+                        while (querySdr.Read())
+                        {
+                            trackTemp.custom_materialNo = nameDir[querySdr[0].ToString()];//转换为海关料号                   
+                        }
+                        querySdr.Close();
+                    }
+
                     if (TrackNoCustomRelationList.Count > 0)
                     {
                         //信息完全,生成信息
@@ -183,7 +220,8 @@ namespace SaledServices.CustomsExport
                         TrackNoCustomRelation TrackNoCustomRelationTemp = new TrackNoCustomRelation();
                         TrackNoCustomRelationTemp.trackno = querySdr[0].ToString();
 
-                        TrackNoCustomRelationTemp.custom_materialNo = querySdr[1].ToString();//正常使用客户料号
+                        TrackNoCustomRelationTemp.custom_materialNo = nameDir[querySdr[1].ToString()]
+                            ;//正常使用客户料号
                         TrackNoCustomRelationTemp.declare_number = querySdr[2].ToString();
                         TrackNoCustomRelationTemp.date = querySdr[3].ToString();
                         TrackNoCustomRelationTemp.declare_unit = "台";

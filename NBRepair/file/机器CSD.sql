@@ -18,6 +18,14 @@ CREATE TABLE [dbo].[BOMCompare](
 	[STEP_SEQUENCE] [nvarchar](50) NULL
 )
 
+/*记录在收货后在维修状态的整机，并且数据在打包之前*/
+--create table RepairingNBHouse
+--(
+--Id INT PRIMARY KEY IDENTITY, 
+--model NVARCHAR(128),/*机型*/
+--number NVARCHAR(128), /*入库数量*/
+--)
+
 /*不良品材料库房*/
 create table materialNgHouse
 (
@@ -103,7 +111,7 @@ CREATE TABLE [dbo].[INNBCHUKU](
 create table NBHouse
 (
 Id INT PRIMARY KEY IDENTITY, 
-model NVARCHAR(128),/*机型*/
+model NVARCHAR(128),/*机型 储存SKU字段*/
 number NVARCHAR(128), /*入库数量*/
 )
 
