@@ -21,7 +21,7 @@ namespace NBRepair
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.countfile.Text != "" && this.countfile.Text != "" && this.countfile.Text != "" && this.countfile.Text != "" && this.countfile.Text != "")
+            if (this.countfile.Text != "" && this.keyinman.Text != "" && this.partsno.Text != "" && this.qty.Text != "" && this.declearNoTextBox.Text != "")
             {
                 SqlConnection conn = new SqlConnection(Conlist.ConStr);
                 conn.Open();
@@ -38,7 +38,7 @@ namespace NBRepair
                     this.price.Text.Trim().ToUpper() + "','" +
                     this.keyinman.Text.Trim().ToUpper() + "','" +
                     System.DateTime.Today.ToShortDateString() + "','" +
-                    this.declearNoTextBox.Text.Trim()+
+                    this.declearNoTextBox.Text.Trim() +
                      "')";
                     cmd.ExecuteNonQuery();
 
@@ -73,7 +73,7 @@ namespace NBRepair
                         {
                             cmd.CommandText = "INSERT INTO materialhouse (number, materialNo ) VALUES('" + this.qty.Text.Trim() + "','" + this.partsno.Text.Trim() + "')";
                         }
-                        
+
                         cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
@@ -87,6 +87,10 @@ namespace NBRepair
                 }
                 conn.Close();
                 queryLastesttoday();
+            }
+            else
+            {
+                MessageBox.Show("输入的内容为空，请检查！");
             }
         }
 
