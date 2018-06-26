@@ -116,7 +116,7 @@ namespace NBRepair
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = mConn;
                 string tableName = "NBShouLiao";
-                cmd.CommandText = "select NBSerial, Model ,BatterySN, KBSN ,MBSN, Memory1SN ,Memory2SN,HDDSN,SSDSN,WLANSN,FANSN,COVERSN,BRZELSN,UPSN,LOWSN,OTHERSN,RepairDesc,Status from " + tableName + " where RepairDate = '" + System.DateTime.Today.ToString("yyyy-MM-dd") + "'";
+                cmd.CommandText = "select NBSerial, Model ,BatterySN, KBSN ,MBSN, Memory1SN ,Memory2SN,HDDSN,SSDSN,WLANSN,COVERSN,BRZELSN,UPSN,LOWSN,OTHERSN,RepairDesc,Status from " + tableName + " where RepairDate = '" + System.DateTime.Today.ToString("yyyy-MM-dd") + "'";
 
                 cmd.CommandType = CommandType.Text;
 
