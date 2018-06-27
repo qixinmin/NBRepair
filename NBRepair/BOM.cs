@@ -86,8 +86,8 @@ namespace NBRepair
                 using (System.Data.SqlClient.SqlBulkCopy bcp = new System.Data.SqlClient.SqlBulkCopy(Conlist.ConStr))
                 {
                     // bcp.SqlRowsCopied += new System.Data.SqlClient.SqlRowsCopiedEventHandler(bcp_SqlRowsCopied);
-                    bcp.BatchSize = 100;//每次传输的行数
-                    bcp.NotifyAfter = 100;//进度提示的行数
+                    bcp.BatchSize = 1000;//每次传输的行数
+                    bcp.NotifyAfter = 1000;//进度提示的行数
                     bcp.DestinationTableName = tableName;//目标表
                     //客户机器物料编号	机型	配置说明	类别	说明	厂商料号	客户料号	classcode	数据说明	数量	用途	厂商型号	硬盘数量	SSD数量	内存数量	机器颜色
 

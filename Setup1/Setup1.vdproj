@@ -21,20 +21,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_05E94DAE893F4AE9F78812E5E41A9931"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1D4E2398E7084B978D38236DED3F891F"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_211D2BA7AD982461B0F593537B0135CD"
-        "OwnerKey" = "8:_8258405C4F7A4A34A058F3A6D1DFA591"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,12 +51,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C600F5DA48F3E3092B5DE45A506B9751"
-        "OwnerKey" = "8:_05E94DAE893F4AE9F78812E5E41A9931"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E0043C39379F455083B74A38E4C4DE2A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,7 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0558917A54E4A127A0830ED00B958B58"
+        "OwnerKey" = "8:_C600F5DA48F3E3092B5DE45A506B9751"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -100,19 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_05E94DAE893F4AE9F78812E5E41A9931"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8258405C4F7A4A34A058F3A6D1DFA591"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C600F5DA48F3E3092B5DE45A506B9751"
+        "OwnerKey" = "8:_0558917A54E4A127A0830ED00B958B58"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -133,6 +103,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -230,37 +208,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_05E94DAE893F4AE9F78812E5E41A9931"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:Interop.TkxRFTAG, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1904804c83c4f22a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_05E94DAE893F4AE9F78812E5E41A9931"
-                    {
-                    "Name" = "8:Interop.TkxRFTAG.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Interop.TkxRFTAG.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_B2D38E7BB92E47159DBD0BE45316940B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1D4E2398E7084B978D38236DED3F891F"
             {
             "SourcePath" = "8:..\\NBRepair\\bin\\Release\\NBRepair.pdb"
@@ -279,26 +226,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_211D2BA7AD982461B0F593537B0135CD"
-            {
-            "SourcePath" = "8:lppx2.tlb"
-            "TargetName" = "8:lppx2.tlb"
-            "Tag" = "8:"
-            "Folder" = "8:_B2D38E7BB92E47159DBD0BE45316940B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:2"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8258405C4F7A4A34A058F3A6D1DFA591"
@@ -510,7 +437,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:YiMai"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Setup"
@@ -663,7 +590,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_75FE639738614A26B0A64C460FB9F12D"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:安装文件夹"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
@@ -698,7 +625,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_87C64F7A9FCE49DDAD6C3AB669FB3FD3"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Welcome"
+                    "DisplayName" = "8:欢迎使用"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
@@ -746,7 +673,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9F98862A8FDC4E8F8A7708F424E32FD5"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Confirm Installation"
+                    "DisplayName" = "8:确认安装"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
@@ -777,7 +704,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_017179166AE74352A4FA6A61482430D6"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Finished"
+                    "DisplayName" = "8:已完成"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
@@ -821,7 +748,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_24D936C2283B4D7B82A0AF90C187E745"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Progress"
+                    "DisplayName" = "8:进度"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
@@ -865,7 +792,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_198E70B606C4427DBBE50A8CB1DBD9CC"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Confirm Installation"
+                    "DisplayName" = "8:确认安装"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
@@ -887,7 +814,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4A51EF87656F41D999EE9936D4B3F72E"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Welcome"
+                    "DisplayName" = "8:欢迎使用"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
@@ -935,7 +862,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B2C21729A080492BBA335307FB4D31F4"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:安装文件夹"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
@@ -972,7 +899,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_A2E9D82C33AE478AB632518AE7B64AC4"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Progress"
+                    "DisplayName" = "8:进度"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
@@ -1016,7 +943,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4E6944DE59D9457081B01AFE54A48BBC"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Finished"
+                    "DisplayName" = "8:已完成"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"

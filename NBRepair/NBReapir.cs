@@ -606,7 +606,7 @@ namespace NBRepair
                     {
                         if (this.WLANSN.Text.ToUpper() != "NNN")
                         {
-                            string partsno = GetPartsNo(this.BatterySN.Text.ToUpper(), 10);
+                            string partsno = GetPartsNo(this.WLANSN.Text.ToUpper(), 10);
                             string topicitem = "";
                             if (CheckKeyPartsInBom(this.label24.Text, topicitem, partsno, partsno))
                             {
