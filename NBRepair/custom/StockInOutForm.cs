@@ -139,7 +139,7 @@ namespace SaledServices.CustomsExport
                             init1.location_code = "";
                             init1.note = "";
 
-                            storeTransList.Add(init1);
+                          //  storeTransList.Add(init1);
                         }
                     }
 
@@ -205,7 +205,7 @@ namespace SaledServices.CustomsExport
                             init1.location_code = "";
                             init1.note = "";
 
-                            storeTransList.Add(init1);
+                           // storeTransList.Add(init1);
                         }
 
                         generateWorkOrderHead.addWorkListHeads(TrackNoCustomRelationList);
@@ -335,7 +335,7 @@ namespace SaledServices.CustomsExport
                             init1.location_code = "";
                             init1.note = "";
 
-                            storeTransList.Add(init1);
+                         //   storeTransList.Add(init1);
                         }
                     }
 
@@ -376,7 +376,7 @@ namespace SaledServices.CustomsExport
                             init1.location_code = "";
                             init1.note = "";
 
-                            storeTransList.Add(init1);
+                          //  storeTransList.Add(init1);
                         }
                     }
 

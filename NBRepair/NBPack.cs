@@ -36,7 +36,7 @@ namespace NBRepair
 
         public string GetPartsNo(string partsserial, int l)
         {
-            string partsno = "";
+            string partsno = partsserial;
             if (partsserial.Length >= l + 2)
             {
                 if (partsserial.Substring(0, 2).ToUpper() == "8S")
@@ -61,7 +61,7 @@ namespace NBRepair
             {
                 if (this.NewAdapterSN.Text != "")
                 {
-                    string partsno = GetPartsNo(this.NewAdapterSN.Text.ToUpper(), 7);
+                    string partsno = GetPartsNo(this.NewAdapterSN.Text.ToUpper(), 10);
                     string topicitem = "AC ADAP";
                     if (CheckKeyPartsInBom(this.NBSerial.Text.Trim().Substring(2, 10).ToUpper(), topicitem, partsno, partsno) == true)// PWR CORD
                     {

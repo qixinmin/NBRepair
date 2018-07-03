@@ -498,7 +498,6 @@ namespace NBRepair
                         }
                         else
                         {
-
                             this.SSDSN.Focus();
                         }
                     }
@@ -518,7 +517,6 @@ namespace NBRepair
         {
             if (e.KeyChar == 13)
             {
-
                 if (this.HDDSN.Text.Trim().ToUpper().Substring(0, 2) == "8S" || this.HDDSN.Text.Trim().ToUpper().Substring(0, 3) == "NNN")
                 {
                     if (this.HDDSN.Text != "" && this.HDDSN.Text != "NNN")
@@ -591,7 +589,6 @@ namespace NBRepair
                 else
                 {
                     this.SSDSN.Focus();
-
                 }
             }
         }       

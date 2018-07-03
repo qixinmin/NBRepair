@@ -46,7 +46,7 @@
             // NBSerial
             // 
             this.NBSerial.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NBSerial.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.NBSerial.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.NBSerial.Location = new System.Drawing.Point(179, 5);
             this.NBSerial.Name = "NBSerial";
             this.NBSerial.Size = new System.Drawing.Size(434, 47);
@@ -56,7 +56,7 @@
             // NewAdapterSN
             // 
             this.NewAdapterSN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NewAdapterSN.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.NewAdapterSN.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.NewAdapterSN.Location = new System.Drawing.Point(179, 72);
             this.NewAdapterSN.Name = "NewAdapterSN";
             this.NewAdapterSN.Size = new System.Drawing.Size(434, 47);
@@ -66,7 +66,7 @@
             // NewPowerCodeSN
             // 
             this.NewPowerCodeSN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NewPowerCodeSN.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.NewPowerCodeSN.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.NewPowerCodeSN.Location = new System.Drawing.Point(179, 147);
             this.NewPowerCodeSN.Name = "NewPowerCodeSN";
             this.NewPowerCodeSN.Size = new System.Drawing.Size(434, 47);
@@ -76,7 +76,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.Location = new System.Drawing.Point(179, 296);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(270, 154);
@@ -88,7 +88,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(5, 2);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(159, 35);
@@ -98,7 +98,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(5, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(159, 35);
@@ -108,7 +108,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(5, 144);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(159, 70);
