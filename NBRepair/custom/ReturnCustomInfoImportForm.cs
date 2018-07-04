@@ -95,7 +95,7 @@ namespace SaledServices
                         //首先判断是否在repaired_out_house_table表中，一一对应
                         foreach (ReportCustomInfo temp in reportList)
                         {
-                            cmd.CommandText = "select NBSerial from OUTNBCHUKU where NBSerial='" + temp.track_no.Trim() + "'";
+                            cmd.CommandText = "select NBID from OUTNBCHUKU where NBID='" + temp.track_no.Trim() + "'";
                             SqlDataReader sqlReader = cmd.ExecuteReader();
                             if (sqlReader.HasRows == false)
                             {

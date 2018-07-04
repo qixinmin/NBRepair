@@ -48,10 +48,23 @@ namespace SaledServices.CustomsExport
                 cmd.Connection = mConn;
                 cmd.CommandType = CommandType.Text;
 
+                Dictionary<string, string> bomDict = new Dictionary<string, string>();
+                cmd.CommandText = "select distinct LNV_PN,LCFC_PN from BOMCompare";
+                SqlDataReader querySdr = cmd.ExecuteReader();
+                while (querySdr.Read())
+                {
+                    string key = querySdr[0].ToString().Trim();
+                    if (key != "NULL" && key !="" && bomDict.ContainsKey(key) == false)
+                    {
+                        bomDict.Add(key, querySdr[1].ToString().Trim());
+                    }
+                }
+                querySdr.Close();
+
                 //使用PackDate日期而不是采用维修日期，因为pack的日期确定了全部的使用材料
 
-                cmd.CommandText = "select NBSerial,COVERSN,BRZELSN,UPSN,LOWSN,KBSN,KBUPSN,BatterySN,BatterySN1,RADAPTER,OTHERSN,materials,RepairDate from NBShouLiao where PackDate between '" + startTime + "' and '" + endTime + "'";
-                SqlDataReader querySdr = cmd.ExecuteReader();
+                cmd.CommandText = "select NBID,COVERSN,BRZELSN,UPSN,LOWSN,KBSN,KBUPSN,BatterySN,BatterySN1,RADAPTER,OTHERSN,materials,RepairDate from NBShouLiao where PackDate between '" + startTime + "' and '" + endTime + "'";
+                querySdr = cmd.ExecuteReader();
 
                 while (querySdr.Read())
                 {
@@ -59,7 +72,16 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[1].ToString().Trim();
+
+                        string temp = querySdr[1].ToString().Trim();
+                        temp = GetPartsNo(temp,10);
+
+                        if(temp.Length !=11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -71,7 +93,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[2].ToString().Trim();
+                        string temp = querySdr[2].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -83,7 +113,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[3].ToString().Trim();
+                        string temp = querySdr[3].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -95,7 +133,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[4].ToString().Trim();
+                        string temp = querySdr[4].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -107,7 +153,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[5].ToString().Trim();
+                        string temp = querySdr[5].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -119,7 +173,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[6].ToString().Trim();
+                        string temp = querySdr[6].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -130,8 +192,16 @@ namespace SaledServices.CustomsExport
                     if (querySdr[7].ToString().Trim() != "")
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
-                        MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[7].ToString().Trim();
+                        MaterialCustomRelationTemp.id = querySdr[0].ToString(); 
+                        string temp = querySdr[7].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -143,7 +213,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[8].ToString().Trim();
+                        string temp = querySdr[8].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -155,7 +233,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[9].ToString().Trim();
+                        string temp = querySdr[9].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -167,7 +253,15 @@ namespace SaledServices.CustomsExport
                     {
                         MaterialCustomRelation MaterialCustomRelationTemp = new MaterialCustomRelation();
                         MaterialCustomRelationTemp.id = querySdr[0].ToString();
-                        MaterialCustomRelationTemp.mpn = querySdr[10].ToString().Trim();
+                        string temp = querySdr[10].ToString().Trim();
+                        temp = GetPartsNo(temp, 10);
+
+                        if (temp.Length != 11)
+                        {
+                            temp = bomDict[temp];
+                        }
+
+                        MaterialCustomRelationTemp.mpn = temp;
                         MaterialCustomRelationTemp.num = "-1";
                         MaterialCustomRelationTemp.declare_unit = "个";
                         MaterialCustomRelationTemp.date = querySdr[12].ToString();
@@ -224,6 +318,28 @@ namespace SaledServices.CustomsExport
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        public string GetPartsNo(string partsserial, int l)
+        {
+            string partsno = partsserial;
+            if (partsserial.Length >= l + 2)
+            {
+                if (partsserial.Substring(0, 2).ToUpper() == "8S")
+                {
+                    partsno = partsserial.ToUpper().Substring(2, l);
+                }
+                else if (partsserial.Substring(0, 3).ToUpper() == "11S")
+                {
+                    partsno = partsserial.ToUpper().Substring(3, l);
+                }
+                else
+                {
+                    partsno = partsserial.ToUpper().Substring(0, 11);
+                }
+            }
+
+            return partsno;
         }
 
         public void doGenerate()
