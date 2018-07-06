@@ -21,7 +21,7 @@ namespace NBRepair
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.countfile.Text != "" && this.keyinman.Text != "" && this.partsno.Text != "" && this.qty.Text != "" && this.declearNoTextBox.Text != "")
+            if (this.countfile.Text.Trim() != "" && this.keyinman.Text.Trim() != "" && this.partsno.Text.Trim() != "" && this.qty.Text.Trim() != "" && this.qty.Text.Trim()!="0" && this.declearNoTextBox.Text.Trim() != "")
             {
                 SqlConnection conn = new SqlConnection(Conlist.ConStr);
                 conn.Open();

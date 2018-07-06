@@ -157,14 +157,14 @@ namespace SaledServices.CustomsExport
 
                     //3 整机良品入库信息
                     TrackNoCustomRelationList.Clear();
-                    cmd.CommandText = "select NBID,Model,rukudate from OUTNBRUKU where rukudate between '" + startTime + "' and '" + endTime + "'";
+                    cmd.CommandText = "select NBID,NBSerial,rukudate from OUTNBRUKU where rukudate between '" + startTime + "' and '" + endTime + "'";
                     querySdr = cmd.ExecuteReader();
                     while (querySdr.Read())
                     {
                         TrackNoCustomRelation TrackNoCustomRelationTemp = new TrackNoCustomRelation();
                         TrackNoCustomRelationTemp.trackno = querySdr[0].ToString();                      
 
-                        TrackNoCustomRelationTemp.custom_materialNo =querySdr[1].ToString();//正常使用客户料号
+                        TrackNoCustomRelationTemp.custom_materialNo =nameDir[ querySdr[1].ToString().Substring(2,10)];//正常使用客户料号
                         TrackNoCustomRelationTemp.date = querySdr[2].ToString();
                         TrackNoCustomRelationTemp.declare_unit = "台";
 
