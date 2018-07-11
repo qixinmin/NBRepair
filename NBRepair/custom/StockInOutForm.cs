@@ -140,7 +140,7 @@ namespace SaledServices.CustomsExport
                             init1.location_code = "";
                             init1.note = "";
 
-                          //  storeTransList.Add(init1);
+                            storeTransList.Add(init1);
                         }
                     }
 

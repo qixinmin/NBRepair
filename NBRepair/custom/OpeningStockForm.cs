@@ -136,7 +136,7 @@ namespace SaledServices.CustomsExport
                     init1.cop_g_no = nameDir[querySdr[0].ToString()];
                     init1.qty = querySdr[1].ToString();
                     init1.unit = "001";
-                    init1.goods_nature = "I";//代码
+                    init1.goods_nature = "E";//代码
                     init1.bom_version = "";
                     init1.check_date = Untils.getCustomCurrentDate();
                     init1.date_type = "C";//代码
